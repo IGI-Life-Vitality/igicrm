@@ -1,0 +1,100 @@
+.my_label {
+    display: inline;
+    padding: 0.4em 2.6em 0.5em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+}
+.my_label-success {
+    background-color: #5cb85c;
+}
+.badge.badge-success, .my_label.my_label-success {
+    background: #428c4e;
+}
+.badge, .my_label {
+    font-size: 75%;
+    font-weight: 600;
+}
+
+
+.badge.badge-info, .my_label.my_label-info {
+    background: #5AC8FA;
+}
+.my_label-info {
+    background-color: #5bc0de;
+}
+
+.badge.badge-warning, .my_label.my_label-warning {
+    background: #FF9500;
+}
+
+.my_label-warning {
+    background-color: #f0ad4e;
+}
+
+.badge.badge-danger, .my_label.my_label-danger {
+    background: #FF3B30;
+}
+
+.label-danger {
+    background-color: #d9534f;
+}
+
+.my_btn {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-transition: all .1s linear;
+    -moz-transition: all .1s linear;
+    transition: all .1s linear;
+}
+.my_btn-info.active, .my_btn-info:active, .my_btn-info:focus, .my_btn-info:hover, .open>.dropdown-toggle.my_btn-info, .open>.dropdown-toggle.my_btn-info:focus, .open>.dropdown-toggle.my_btn-info:hover {
+    background: #4396bb;
+    border-color: #4396bb;
+}
+
+.my_btn.my_btn-info {
+    color: #fff;
+    background: #248aaf;
+    border-color: #248aaf;
+}
+
+.my_btn-group-sm>.my_btn, .my_btn-sm {
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+
+.my_btn-info {
+    color: #fff;
+    background-color: #5bc0de;
+    border-color: #46b8da;
+}
+
+.my_btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}

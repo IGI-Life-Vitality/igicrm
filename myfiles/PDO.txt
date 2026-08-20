@@ -1,0 +1,3 @@
+http://wiki.hashphp.org/index.php?title=PDO_Tutorial_for_MySQL_Developers&action=edit
+http://crewow.com/PHP-MySQL-Simple-Select-using-PDO-in-Bootstrap.php
+https://www.easysoft.com/developer/languages/php/examples/CallSPMoreResults.html

@@ -1,0 +1,67 @@
+.logo img{
+	height: 45px;
+	padding: 12px 0px 0px 0px;
+}
+
+.blink_me {
+  animation: blinker 1s linear infinite;
+}
+@keyframes blinker {  
+  50% { opacity: 0; }
+}
+
+/* group_add.php Styling */
+.group_tab{
+	width: 98%;
+	margin-left: 10px;
+}
+
+.full_permission{
+	margin: 0px 0px 20px 10px !important;
+}
+
+/* Dashboard Color */
+.bg-green-igi{
+	background: #00acac!important;
+}
+
+.bg-blue-igi {
+  background: #348fe2!important;
+}
+
+.bg-purple-igi {
+  background: #727cb6!important;
+}
+
+.bg-black-igi {
+  background: #2d353c!important;
+}
+
+.bg-yellow-igi{
+  background: #f68e12!important;
+}
+
+.bg-or-igi {
+  background: #348fe2!important;
+}
+
+.bg-pi-igi {
+  background: #024611!important;
+}
+
+.bg-red-igi {
+  background: #fc0b2b!important;
+}
+
+.media-body-igi{
+  background: #F0F3F4;
+  padding: 10px 10px;
+  border-radius: 4px;
+}
+.text-new{
+  color: #802222 !important;
+}
+.buttons-excel, .buttons-pdf, .buttons-collection, .buttons-copy, .buttons-csv, .buttons-print{
+  background: #006BB1 !important;
+  color: #FFF !important;
+}

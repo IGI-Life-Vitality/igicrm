@@ -1,0 +1,7 @@
+https://www.everyething.com/Example-of-simple-jsTree-with-dynamic-JSON-data
+https://www.phpflow.com/php/dynamic-tree-with-jstree-php-and-mysql/
+http://webeasystep.com/blog/view_article/Build_dynamic_tree_nodes_with_jstree_and_codeigniter
+
+
+http://www.dreamincode.net/forums/topic/290000-limiting-login-attempts/
+https://www.phpflow.com/jquery-plugin-2/10-most-popular-jquery-tree-menu-plugin/

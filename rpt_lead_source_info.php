@@ -1,0 +1,512 @@
+<?php
+    $page_title         = "Lead Source Of Info Wise Analysis";
+    $permission_type    = "view";
+    $module_id          = "51";
+    $parent_id          = "25";
+    $parent_id2         = "25";
+    $menu_id            = "rpt_lead_source_info";
+
+    include('includes/header.php');
+    include('classes/lead_rpt.php');
+
+    $login_id = $_SESSION['login_id'];
+
+    $objLeadReport = new LeadReport();
+    $citylop       = $objLeadReport->countsLeadsByCityLoop();
+    $data          = $objLeadReport->countsLeadsBySourceInfo('','','');
+
+    //print_r($data); die;
+?>
+
+<!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
+<link href="assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet" />
+<link href="assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css" rel="stylesheet" />
+<!-- ================== END PAGE LEVEL STYLE ================== -->
+
+<!-- begin #content -->
+<div id="content" class="content">
+    <!-- begin breadcrumb -->
+    <ol class="breadcrumb pull-right">
+        <li><a href="javascript:;">Home</a></li>
+        <li><a href="javascript:;">Reports Management</a></li>
+        <li><a href="javascript:;">Lead Reports</a></li>
+        <li class="active"><? echo $page_title; ?></li>
+    </ol>
+    <!-- end breadcrumb -->
+
+    <!-- begin page-header -->
+    <h1 class="page-header"><? echo $page_title; ?></h1>
+    <!-- end page-header -->
+
+    <!-- begin row -->
+    <div class="row">
+        <!-- <div class="col-md-12">
+            <? 
+                /*echo "<pre>";
+                    print_r($data); 
+                echo "<pre>";*/
+            ?>
+        </div> -->
+
+        <!-- begin col-12 -->
+        <div class="col-md-12">
+            <div class="panel panel-inverse">
+                <div class="panel-heading">
+                    <div class="panel-heading-btn">
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                    </div>
+                    <h4 class="panel-title">&nbsp;</h4>
+                </div>
+                
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>From Date<!-- <span style="color: red;">*</span> --></label>
+                                    <input type="text" class="form-control" id="datetimepicker1" name="txtFromDate" value="<? echo trim($_POST['txtFromDate']) != '' ? date('m/d/Y' ,strtotime(trim($_POST['txtFromDate']))) : ''; ?>" placeholder="Start Date" data-date-format="YYYY-MM-DD">
+                                    <div class="input-error form-control-input" style="color: Red; display: none;">From Date is required</div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>To Date<!-- <span style="color: red;">*</span> --></label>
+                                    <input type="text" class="form-control" id="datetimepicker2" name="txtToDate" value="<? echo trim($_POST['txtToDate']) != '' ? date('m/d/Y' ,strtotime(trim($_POST['txtToDate']))) : ''; ?>" placeholder="End Date" data-date-format="YYYY-MM-DD">
+                                    <div class="input-error form-control-input" style="color: Red; display: none;">To Date is required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>City</label>
+                                    <select class="form-control default-select2" id="RgCity" name="RgCity" data-size="10" data-live-search="true" data-style="btn-white">
+                                        <?php $city = $objLeadReport->GetRgCity(); ?>
+                                        <option value="">All</option>
+                                        <?php foreach($city as $cities){ ?>
+                                            <option value="<? echo $cities["id"]; ?>" ><? echo $cities["fullname"]?></option>
+                                        <? } ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <button type="submit" name="search" class="btn btn-sm btn-primary" onclick="search();">Filter Leads</button>
+                                    
+                                    <a href="" onclick="exportAllReport(); return false;" class="btn btn-sm btn-success">Export All</a>
+                                    
+                                    <a href="" onclick="exportFilterReport(); return false;" class="btn btn-sm btn-success">Export Filter</a>
+
+                                    <a href="javascript: window.location.href = 'rpt_lead_source_info.php'" class="btn btn-sm btn-inverse">Reset</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-12">
+                            <table id="tblMyTable" class="table table-igi table-responsive">
+                                <tbody>
+                                    <tr>
+                                        <td align="left">
+                                            <h4>Source Of Info Wise Lead Analysis</h4>
+                                        </td>
+                                        <td align="right">
+                                            <img src="assets/img/logo.png" width="100px" height="35px">
+                                        </td>
+                                    </tr>
+                                    <tr class="spanFromDate">
+                                        <td align="left">
+                                            <b class="FromDate">From Date:</b> 
+                                            <span id="spanFromDate"> - </span>
+                                        </td>
+                                        <td align="right">
+                                            <b>Print Date:</b> 
+                                            <span id="spanPrintDate"></span>
+                                        </td>
+                                    </tr>
+                                    <tr class="spanToDate">
+                                        <td align="left">
+                                            <b class="ToDate">To Date:</b> 
+                                            <span id="spanToDate"> - </span>
+                                        </td>
+                                        <td align="right">
+                                            <b>Pages:</b> 1
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <table id="tblTable" class="table table-igi table-responsive table-bordered">
+                        <thead>
+                            <tr>
+                                <th width="400px;">City</th>
+                                <th width="100px;">Count</th>
+                                <th width="100px;">Percent</th>
+                                <th width="300px;">Source Of Information</th>
+                                <th width="150px;">Male</th>
+                                <th width="100px;">Female</th>
+                                <th width="150px;">Lead Count</th>
+                                <th width="200px;">Overall Percentage</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="table table-bordered">
+                            <?php foreach($citylop as $cityloop): ?>
+                                <?php
+                                    $city_id = $cityloop['id'];
+                                    $data1 = $objLeadReport->countsLeadsBySourceInfoOnPageLoad($city_id);
+                                ?>
+                                
+                                <!-- DONE -->
+                                <tr>
+                                    <td rowspan="8"><?php echo $cityloop['city_name']; ?></td>
+                                    <td rowspan="8">
+                                        <?php 
+                                            $lead_counts = 
+                                                $data1[0]['email'] + 
+                                                $data1[0]['calls'] + 
+                                                $data1[0]['letter'] + 
+                                                $data1[0]['walkin_customer'] +
+                                                $data1[0]['website'] +
+                                                $data1[0]['corporate_partners'] +
+                                                $data1[0]['vec'] +
+                                                $data1[0]['billboard'];
+                                            echo $lead_counts;
+                                        ?>
+                                    </td>
+                                    <td rowspan="8">
+                                        <?php 
+                                            echo number_format(($lead_counts/$data1[0]['counts']*100),2); 
+                                        ?>%
+                                    </td>
+                                    <td>Email</td>
+                                    <td><?php echo $data1[0]['email_male_leads']; ?></td>
+                                    <td><?php echo $data1[0]['email_female_leads']; ?></td>
+                                    <td><?php echo $data1[0]['email']; ?></td>
+                                    <td>
+                                        <?php 
+                                            echo number_format(($data1[0]['email']/$data[0]['counts']*100),2); 
+                                        ?>%
+                                    </td>
+                                </tr>
+                                
+                                <!-- DONE -->
+                                <tr>
+                                    <td>Calls</td>
+                                    <td><?php echo $data1[0]['calls_male_leads']; ?></td>
+                                    <td><?php echo $data1[0]['calls_female_leads']; ?></td>
+                                    <td><?php echo $data1[0]['calls']; ?></td>
+                                    <td>
+                                        <?php 
+                                            echo number_format($data1[0]['calls']/$data[0]['counts']*100, 2); 
+                                        ?>%
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Letter</td>
+                                    <td><?php echo $data1[0]['letter_male_leads']; ?></td>
+                                    <td><?php echo $data1[0]['letter_female_leads']; ?></td>
+                                    <td><?php echo $data1[0]['letter']; ?></td>
+                                    <td>
+                                        <?php 
+                                            echo number_format($data1[0]['letter']/$data[0]['counts']*100, 2); 
+                                        ?>%
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Walk in Customer</td>
+                                    <td><?php echo $data1[0]['walkin_customer_male_leads']; ?></td>
+                                    <td><?php echo $data1[0]['walkin_customer_female_leads']; ?></td>
+                                    <td><?php echo $data1[0]['walkin_customer']; ?></td>
+                                    <td>
+                                        <?php 
+                                            echo number_format($data1[0]['walkin_customer']/$data[0]['counts']*100, 2); 
+                                        ?>%
+                                    </td>
+                                </tr>
+                                
+                                <!-- DONE -->
+                                <tr>
+                                    <td>Website</td>
+                                    <td><?php echo $data1[0]['website_male_leads']; ?></td>
+                                    <td><?php echo $data1[0]['website_female_leads']; ?></td>
+                                    <td><?php echo $data1[0]['website']; ?></td>
+                                    <td>
+                                        <?php 
+                                            echo number_format($data1[0]['website']/$data[0]['counts']*100, 2); 
+                                        ?>%
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>Corporate Partners</td>
+                                    <td><?php echo $data1[0]['corporate_partners_male_leads']; ?></td>
+                                    <td><?php echo $data1[0]['corporate_partners_female_leads']; ?></td>
+                                    <td><?php echo $data1[0]['corporate_partners']; ?></td>
+                                    <td>
+                                        <?php 
+                                            echo number_format($data1[0]['corporate_partners']/$data[0]['counts']*100, 2); 
+                                        ?>%
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Vitality Experience Center</td>
+                                    <td><?php echo $data1[0]['vec_male_leads']; ?></td>
+                                    <td><?php echo $data1[0]['vec_female_leads']; ?></td>
+                                    <td><?php echo $data1[0]['vec']; ?></td>
+                                    <td>
+                                        <?php 
+                                            echo number_format($data1[0]['vec']/$data[0]['counts']*100, 2); 
+                                        ?>%
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>BillBoard / Others</td>
+                                    <td><?php echo $data1[0]['billboard_male_leads']; ?></td>
+                                    <td><?php echo $data1[0]['billboard_female_leads']; ?></td>
+                                    <td><?php echo $data1[0]['billboard']; ?></td>
+                                    <td>
+                                        <?php 
+                                            echo number_format($data1[0]['billboard']/$data[0]['counts']*100, 2); 
+                                        ?>%
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <td colspan="4"><b>Total</b></td>
+                                <td><b><?php echo number_format($data[0]['all_male_leads']); ?></b></td>
+                                <td><b><?php echo number_format($data[0]['all_female_leads']); ?></b></td>
+                                <td><b><?php echo number_format($data[0]['counts']); ?></b></td>
+                                <td><b><?php echo number_format(100); ?>%</b></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <!-- end panel -->
+        </div>
+        <!-- end col-12 -->
+    </div>
+    <!-- end row -->
+</div>
+<!-- end #content -->
+
+<!-- begin #footer -->
+<?php include('includes/footer.php'); ?>
+<!-- end #footer -->
+
+<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+<script src="assets/plugins/ionRangeSlider/js/ion-rangeSlider/ion.rangeSlider.min.js"></script>
+<script src="assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+<script src="assets/plugins/masked-input/masked-input.min.js"></script>
+<script src="assets/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+<script src="assets/plugins/password-indicator/js/password-indicator.js"></script>
+<script src="assets/plugins/bootstrap-combobox/js/bootstrap-combobox.js"></script>
+<script src="assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+<script src="assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
+<script src="assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput-typeahead.js"></script>
+<script src="assets/plugins/jquery-tag-it/js/tag-it.min.js"></script>
+<script src="assets/plugins/bootstrap-daterangepicker/moment.js"></script>
+<script src="assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="assets/plugins/select2/dist/js/select2.min.js"></script>
+<script src="assets/plugins/bootstrap-eonasdan-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<script src="assets/plugins/bootstrap-show-password/bootstrap-show-password.js"></script>
+<script src="assets/plugins/bootstrap-colorpalette/js/bootstrap-colorpalette.js"></script>
+<script src="assets/plugins/jquery-simplecolorpicker/jquery.simplecolorpicker.js"></script>
+<script src="assets/plugins/clipboard/clipboard.min.js"></script>
+<script src="assets/js/form-plugins.demo.min.js"></script>
+
+<script src="assets/plugins/DataTables/media/js/jquery.dataTables.js"></script>
+<script src="assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
+<script src="assets/js/table-manage-default.demo.min.js"></script>
+<script src="assets/js/apps.min.js"></script>
+<!-- ================== END PAGE LEVEL JS ================== -->
+
+<script>
+    var PrintDate;
+    var SITE_IP     = '<?php echo SITE_IP; ?>';
+
+    $(document).ready(function() {
+        App.init();
+        FormPlugins.init();
+        TableManageDefault.init();
+
+        PrintDate = moment().format('YYYY-MM-DD HH:mm');
+        $('#spanPrintDate').html(PrintDate);
+    });
+</script>
+
+<script type="text/javascript">
+    function search()
+    {
+        var FromDate    = $('#datetimepicker1').val();
+        var ToDate      = $('#datetimepicker2').val();
+        var RgCity      = $('#RgCity').val();
+
+        $('#spanFromDate').html(FromDate);
+        $('#spanToDate').html(ToDate);
+        $('#spanPrintDate').html(PrintDate);
+        $('#spanRgCity').html(RgCity);
+
+        //alert(FromDate);
+        //alert(ToDate);
+        //alert(RgCity);
+  
+        /*if(validation())
+        {*/
+            $.ajax({
+                type: 'POST',
+                url: "includes/ajax/action_lead_rpt.php",
+                data: 
+                {
+                    'action'     :'search_lead_source_info_rpt',
+                    'FromDate'   :FromDate,
+                    'ToDate'     :ToDate,
+                    'RgCity'     :RgCity
+                },
+                success: function(data) 
+                {
+                    //alert(data);
+                    console.log(data);
+                    var result = data.split("|");
+
+                    if(result[0] == 'success')
+                    {
+                        $('#tblTable tr').remove();
+                        $('#tblTable').html(result[1]);
+
+                        /*$('#data-table').dataTable({ 
+                            destroy: true,            
+                            responsive: true,            
+                            searching: true,            
+                            pageLength: 10,            
+                            order: false       
+                        }); */  
+                    }
+                }
+            });
+        /*}*/
+    }
+
+    function exportAllReport()
+    {
+        $.ajax({
+            type: "POST",
+            url: "includes/ajax/action_lead_rpt.php",
+            data:
+            {
+                'action': 'export_all_lead_source_report'
+            },
+            success: function(data)
+            {
+                window.open(SITE_IP + "/reports/rpt_lead_source_info_download_all.php");
+            }
+        }).done(function (data) {
+            console.log(data);
+        });
+    }
+
+    function exportFilterReport()
+    {
+        var FromDate    = $('#datetimepicker1').val();
+        var ToDate      = $('#datetimepicker2').val();
+        var RgCity      = $('#RgCity').val();
+
+        $.ajax({
+            type: "POST",
+            url: "includes/ajax/action_lead_rpt.php",
+            /*url: "rpt_lead_status_download.php?fDate="+FromDate+"&tDate="+ToDate,*/
+            data:
+            {
+                'action': 'export_lead_source_report',
+                'FromDate': FromDate,
+                'ToDate': ToDate,
+                'RgCity':RgCity
+            },
+            success: function(data)
+            {
+                data = data.trim();
+
+                var result = data.split("|");
+
+                fDate = result[1];
+                tDate = result[2];
+                RgCity= result[3];
+
+                window.open(SITE_IP + "/reports/rpt_lead_source_info_download.php?fDate="+fDate+"&tDate="+tDate+"&RgCity="+RgCity);
+            }
+        }).done(function (data) {
+            console.log(data);
+        });
+    }
+
+    function validation()
+    {
+        //return true;
+        var hasFocus = false;
+        var errCount = 0;
+
+        if($('#datetimepicker1').val() == 0 || $('#datetimepicker1').val() == null) 
+        {
+            $('#datetimepicker1').addClass('error-val');
+            $('#datetimepicker1').parent().find('.input-error').show().css('display', 'inline-block');
+
+            if (!hasFocus) {
+                $('#datetimepicker1').focus();
+                hasFocus = true;
+            }
+            errCount++;
+        }
+        else 
+        {
+            $('#datetimepicker1').removeClass('error-val');
+            //$('#datetimepicker1').parents('.control-group').addClass('success');
+            $('#datetimepicker1').parent().find('.input-error').hide();
+        }
+
+        if($('#datetimepicker2').val() == 0 || $('#datetimepicker2').val() == null) 
+        {
+            $('#datetimepicker2').addClass('error-val');
+            $('#datetimepicker2').parent().find('.input-error').show().css('display', 'inline-block');
+
+            if (!hasFocus) {
+                $('#datetimepicker2').focus();
+                hasFocus = true;
+            }
+            errCount++;
+        }
+        else 
+        {
+            $('#datetimepicker2').removeClass('error-val');
+            $('#datetimepicker2').parent().find('.input-error').hide();
+        }
+
+        if (errCount > 0) 
+        {
+            $('html, body').animate({scrollTop: 0}, 600);
+            return false;
+        }
+        else
+            return true;
+    }
+</script>
+
+</body>
+</html>

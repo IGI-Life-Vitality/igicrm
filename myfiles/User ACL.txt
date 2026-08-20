@@ -1,0 +1,33 @@
+Must See Script:-
+https://www.developer.com/lang/php/creating-a-custom-acl-in-php.html
+https://www.sitepoint.com/role-based-access-control-in-php/
+https://book.cakephp.org/2.0/en/tutorials-and-examples/simple-acl-controlled-application/simple-acl-controlled-application.html
+https://www.thesoftwareguy.in/creating-multi-user-role-based-admin-using-php-mysql-bootstrap/
+https://laracasts.com/discuss/channels/general-discussion/user-rolesgroupspermissions
+
+Must See Portal:-
+https://codecanyon.net/category/php-scripts?as=1&referrer=homepage&term=user%20management&type=c&utf8=%E2%9C%93
+https://codecanyon.net/item/vanguard-advanced-php-login-and-user-management/14521866?s_rank=13
+https://codecanyon.net/item/codeigniter-user-manager-pro-v2-/4815812?s_rank=17
+https://codecanyon.net/item/user-management-permission-role-with-chat/15765109?s_rank=28
+https://codecanyon.net/item/app-builder-angular-crudusersrolespermission-files-manager/20385402
+https://www.onehippo.org/library/administration/user-management.html
+https://codecanyon.net/item/iuser-advanced-php-login-and-user-management/19546441?s_rank=47
+http://88.99.246.251:81/yep/public/auth/login
+
+http://medodesign-001-site1.ctempurl.com/Account/Login?ReturnUrl=%2f
+admin/123456
+
+
+Mix:-
+https://www.phpclasses.org/package/8069-PHP-Manage-role-based-user-permissions-store-in-MySQL.html#view_files/files
+http://www.hotscripts.com/category/scripts/php/scripts-programs/user-management/page:3/
+https://www.knowledgebase-script.com/demo.php
+https://codecanyon.net/item/php-login-user-management-with-message-center/5862673
+https://codecanyon.net/item/titan-project-management-system/18377579
+
+
+for understanding CRM
+https://www.agilecrm.com/demo/
+
+https://codecanyon.net/search/user%20management%20php?as=1&page=6&referrer=homepage&type=p&utf8=%E2%9C%93

@@ -1,0 +1,365 @@
+<?php
+
+$page_title = "Session Activity Log Report";
+$permission_type = "view";
+$module_id = "17";
+$menu_id = "session_activity_log_report";
+
+include('includes/header.php');
+include('classes/eform.php');
+
+$objeform = new eform();
+$data = $objeform->eform_complains($login_id,0);
+
+?>
+
+<!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
+<link href="assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css" rel="stylesheet" />
+<!-- ================== END PAGE LEVEL STYLE ================== -->
+
+
+<!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
+<link href="assets/plugins/parsley/src/parsley.css" rel="stylesheet" />
+<link href="assets/plugins/password-indicator/css/password-indicator.css" rel="stylesheet" />
+<link href="assets/plugins/bootstrap-combobox/css/bootstrap-combobox.css" rel="stylesheet" />
+<link href="assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
+<link href="assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet" />
+<link href="assets/plugins/jquery-tag-it/css/jquery.tagit.css" rel="stylesheet" />
+<link href="assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+<link href="assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet" />
+<link href="assets/plugins/bootstrap-eonasdan-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<link href="assets/plugins/bootstrap-colorpalette/css/bootstrap-colorpalette.css" rel="stylesheet" />
+<link href="assets/plugins/jquery-simplecolorpicker/jquery.simplecolorpicker.css" rel="stylesheet" />
+<link href="assets/plugins/jquery-simplecolorpicker/jquery.simplecolorpicker-fontawesome.css" rel="stylesheet" />
+<link href="assets/plugins/jquery-simplecolorpicker/jquery.simplecolorpicker-glyphicons.css" rel="stylesheet" />
+<link href='assets/plugins/jquery-noty/noty_theme_default.css' rel='stylesheet'>
+<link href="assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
+<link href="assets/plugins/bootstrap-sweetalert/sweetalert.css" rel="stylesheet" />
+<!-- ================== END PAGE LEVEL STYLE ================== -->
+
+
+<!-- begin #content -->
+<div id="content" class="content">
+    <!-- begin breadcrumb -->
+    <ol class="breadcrumb pull-right">
+        <li><a href="javascript:;">Home</a></li>
+        <li><a href="javascript:;">Reports</a></li>
+        <li class="active">Session Activity Log Report</li>
+    </ol>
+    <!-- end breadcrumb -->
+    <!-- begin page-header -->
+    <h1 class="page-header">Session Activity Log Report</h1>
+    <!-- end page-header -->
+
+    <!-- begin row -->
+    <div class="row">
+        <!-- begin col-12 -->
+        <div class="col-md-12">
+            <!-- begin panel -->
+            <div class="panel panel-inverse">
+                <div class="panel-heading">
+                    <div class="panel-heading-btn">
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                    </div>
+                    <h4 class="panel-title">Session Activity Log Report</h4>
+                </div>
+                <div class="panel-body">
+                    <legend>Search</legend>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Organization Type <span style="color: red;">*</span></label>
+                                    <select class="form-control" id="ddlPriority" name="ddlPriority">
+                                        <option>All</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="">Branch/Department</label>
+                                    <select class="form-control" id="ddlPriority" name="ddlPriority">
+                                        <option>All</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="">Channel</label>
+                                    <select class="form-control" id="ddlPriority" name="ddlPriority">
+                                        <option>All</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Users</label>
+                                    <select class="multiple-select2 form-control" multiple="multiple" id="ddlUsers" name="ddlUsers" >
+                                        <option>User 1</option>
+                                        <option>User 2</option>
+                                        <option>User 3</option>
+                                        <option>User 4</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Segment</label>
+                                    <select class="multiple-select2 form-control" multiple="multiple" id="ddlUsers" name="ddlUsers" >
+                                        <option>All</option>
+                                        <option>All Dana</option>
+                                        <option>Business</option>
+                                        <option>Commercial A</option>
+                                        <option>Commercial B</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="">Activity Level 1 <span style="color: red;">*</span></label>
+                                    <select class="form-control" id="ddlPriority" name="ddlPriority">
+                                        <option>All</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="">Activity Level 2</label>
+                                    <select class="form-control" id="ddlPriority" name="ddlPriority">
+                                        <option>All</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="">Activity Level 3</label>
+                                    <select class="form-control" id="ddlPriority" name="ddlPriority">
+                                        <option>All</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="">Activity Level 4</label>
+                                    <select class="form-control" id="ddlPriority" name="ddlPriority">
+                                        <option>All</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="">Period Type <span style="color: red;">*</span></label>
+                                    <select class="form-control" id="ddlPriority" name="ddlPriority">
+                                        <option><-- Select --></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>From Date <span style="color: red;">*</span></label>
+                                    <div class="input-group" id="default-daterange">
+                                        <input type="text" name="default-daterange" class="form-control" value="" placeholder="Click To Select Date Range">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>To Date</label>
+                                    <div class="input-group" id="default-daterange">
+                                        <input type="text" name="default-daterange" class="form-control" value="" placeholder="Click To Select Date Range">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="">Customer/Non Customer</label>
+                                    <select class="form-control" id="ddlPriority" name="ddlPriority">
+                                        <option>All</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-sm btn-info">Submit</button>
+                                    <button type="reset" class="btn btn-sm btn-info">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <legend class="text-center">Session Activity Log Report</legend>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Channel :</label> All
+                                </div>
+                                <div class="form-group">
+                                    <label>Period :</label> 01:06:2010 to 15:06:2010
+                                </div>
+                                <div class="form-group">
+                                    <label>Level 1 :</label> All
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Branch/Dept :</label> All
+                                </div>
+                                <div class="form-group">
+                                    <label>Period Type :</label> Daily
+                                </div>
+                                <div class="form-group">
+                                    <label>Level 2 :</label> All
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label></label>
+                                </div>
+                                <div class="form-group">
+                                    <label></label>
+                                </div>
+                                <div class="form-group">
+                                    <label>Level 3 :</label> All
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Printed By :</label> Admin
+                                </div>
+                                <div class="form-group">
+                                    <label>Printed On :</label> 27:06:2010 07:14M
+                                </div>
+                                <div class="form-group">
+                                    <label>Level 4 :</label> All
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-8">
+                                <label>Summary:</label>
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>6/3/10</th>
+                                            <th>6/10/10</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="1" valign="middle">
+                                            <td>Total</td>
+                                            <td>2</td>
+                                            <td>1</td>
+                                            <td>3</td>
+                                        </tr>
+                                        <tr class="1" valign="middle">
+                                            <td>1-Inquiry/Accounts/Account Collection/Balance Inq</td>
+                                            <td>0</td>
+                                            <td>1</td>
+                                            <td>1</td>
+                                        </tr>
+                                        <tr class="1" valign="middle">
+                                            <td>admin- Admin</td>
+                                            <td>0</td>
+                                            <td>1</td>
+                                            <td>1</td>
+                                        </tr>
+                                        <tr class="1" valign="middle">
+                                            <td>Abvc</td>
+                                            <td>2</td>
+                                            <td>0</td>
+                                            <td>2</td>
+                                        </tr>
+                                        <tr class="1" valign="middle">
+                                            <td>admin- Admin</td>
+                                            <td>2</td>
+                                            <td>0</td>
+                                            <td>2</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end panel -->
+        </div>
+        <!-- end col-12 -->
+    </div>
+    <!-- end row -->
+</div>
+<!-- end #content -->
+
+
+<!-- begin #footer -->
+<?php include('includes/footer.php') ?>
+<!-- end #footer -->
+
+<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+<script src="assets/plugins/DataTables/media/js/jquery.dataTables.js"></script>
+<script src="assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
+<script src="assets/js/table-manage-default.demo.min.js"></script>
+<script src="assets/js/apps.min.js"></script>
+<!-- ================== END PAGE LEVEL JS ================== -->
+
+
+<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+<script src="assets/plugins/ionRangeSlider/js/ion-rangeSlider/ion.rangeSlider.min.js"></script><script src="assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+<script src="assets/plugins/masked-input/masked-input.min.js"></script>
+<script src="assets/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+<script src="assets/plugins/password-indicator/js/password-indicator.js"></script>
+<script src="assets/plugins/bootstrap-combobox/js/bootstrap-combobox.js"></script>
+<script src="assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+<script src="assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
+<script src="assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput-typeahead.js"></script>
+<script src="assets/plugins/jquery-tag-it/js/tag-it.min.js"></script>
+<script src="assets/plugins/bootstrap-daterangepicker/moment.js"></script>
+<script src="assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="assets/plugins/select2/dist/js/select2.min.js"></script>
+<script src="assets/plugins/bootstrap-eonasdan-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<script src="assets/plugins/bootstrap-show-password/bootstrap-show-password.js"></script>
+<script src="assets/plugins/bootstrap-colorpalette/js/bootstrap-colorpalette.js"></script>
+<script src="assets/plugins/jquery-simplecolorpicker/jquery.simplecolorpicker.js"></script>
+<script src="assets/plugins/clipboard/clipboard.min.js"></script>
+<script src="assets/js/form-plugins.demo.min.js"></script>
+<script src="assets/plugins/gritter/js/jquery.gritter.js"></script>
+<script src="assets/plugins/bootstrap-sweetalert/sweetalert.min.js"></script>
+<script src="assets/js/ui-modal-notification.demo.min.js"></script>
+<script src="assets/plugins/parsley/dist/parsley.js"></script><!-- ================== END PAGE LEVEL JS ================== -->
+
+
+
+
+<script>
+    $(document).ready(function() {
+        App.init();
+        FormPlugins.init();
+        TableManageDefault.init();
+    });
+</script>
+
+
+</body>
+</html>

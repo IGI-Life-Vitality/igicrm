@@ -1,0 +1,709 @@
+<?php
+    $page_title         = "Department Wise ISM Results";
+    $permission_type    = "view";
+    $module_id          = "67";
+    $parent_id          = "25";
+    $parent_id2         = "66";
+    $menu_id            = "rpt_task_department_wise_ism";
+
+    include('includes/header.php');
+    include('classes/complaint_rpt.php');
+    include('classes/taskcat_rpt.php');
+
+    $login_id           = $_SESSION['login_id'];
+
+    $objTaskcatReport   = new TaskcatReport();
+    $objComplaintReport = new ComplaintReport();
+    $deprtments         = $objTaskcatReport->getDepartmentById('');
+?>
+
+<!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
+<link href="assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet" />
+<link href="assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css" rel="stylesheet" />
+<!-- ================== END PAGE LEVEL STYLE ================== -->
+
+<!-- begin #content -->
+<div id="content" class="content">
+    <!-- begin breadcrumb -->
+    <ol class="breadcrumb pull-right">
+        <li><a href="javascript:;">Home</a></li>
+        <li><a href="javascript:;">Reports Management</a></li>
+        <li class="active"><? echo $page_title; ?></li>
+    </ol>
+    <!-- end breadcrumb -->
+
+    <!-- begin page-header -->
+    <h1 class="page-header"><? echo $page_title; ?></h1>
+    <!-- end page-header -->
+
+    <!-- begin row -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-inverse">
+                <div class="panel-heading">
+                    <div class="panel-heading-btn">
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                    </div>
+                    <h4 class="panel-title">&nbsp;</h4>
+                </div>
+                
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Department Name</label>
+                                    <select class="form-control default-select2" id="getDepartment" name="getDepartment" data-size="10" data-live-search="true" data-style="btn-white" onchange="getcmp_type_ind();">
+                                        <option value=""> All </option>
+                                        <?php $Depts = $objComplaintReport->getDepartment(); ?>
+                                        <?php foreach($Depts as $Dept){ ?>
+                                        <option value="<? echo $Dept["id"]; ?>" ><? echo $Dept["primary_name"]; ?></option>
+                                        <? } ?>
+                                    </select>
+                                    <div class="input-error form-control-input" style="color: Red; display: none;">Department Name is required</div>
+                                </div>
+                            </div>
+                           
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>ISM</label>
+                                    <select class="form-control default-select2" id="getComplaintType" name="getComplaintType" data-size="10" data-live-search="true" data-style="btn-white" disabled="true">
+                                        <option value="">All</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Filter Start -->
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Duration Type</label>
+                                    <select class="form-control default-select2" id="getDurationType" name="getDurationType" data-size="10" data-live-search="true" data-style="btn-white" onchange="showDurationTypeOption();">
+                                        <option value=""> All </option>
+                                        <option value="1">Monthly</option>
+                                        <option value="2">Quarterly</option>
+                                        <option value="3">Yearly</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Month<span style="color: red;">*</span></label>
+                                    <select class="form-control default-select2" id="getMonth" name="getMonth" data-size="10" data-live-search="true" data-style="btn-white" disabled="true">
+                                        <option value="">-- Select Month --</option>
+                                        <?php $getMonthsDB = $objComplaintReport->getMonthFromDB(); ?>
+                                        <?php foreach($getMonthsDB as $getMonthDB){ ?>
+                                            <option value="<? echo $getMonthDB["month_value"]; ?>" ><? echo $getMonthDB["month_name"]?></option>
+                                        <? } ?>
+                                    </select>
+                                    <div class="input-error form-control-input" style="color: Red; display: none;">Month is required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Quarter<span style="color: red;">*</span></label>
+                                    <select class="form-control default-select2" id="getQuarter" name="getQuarter" data-size="10" data-live-search="true" data-style="btn-white" disabled="true">
+                                        <option value="">-- Select Quarter --</option>
+                                        <?php $getQuartersDB = $objComplaintReport->getQuarterFromDB(); ?>
+                                        <?php foreach($getQuartersDB as $getQuarterDB){ ?>
+                                            <option value="<? echo $getQuarterDB["quarter_value"]; ?>" ><? echo $getQuarterDB["quarter_name"]?></option>
+                                        <? } ?>
+                                    </select>
+                                    <div class="input-error form-control-input" style="color: Red; display: none;">Quarter is required</div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6" id="year_div">
+                                <div class="form-group">
+                                    <label>Year<span style="color: red;">*</span></label>
+                                    <select class="form-control default-select2" id="getYear" name="getYear" data-size="10" data-live-search="true" data-style="btn-white" disabled="true">
+                                        <option value="">-- Select Year --</option>
+                                        <?php $Years = $objComplaintReport->getYearFromDB(); ?>
+                                        <?php foreach($Years as $Year){ ?>
+                                        <option value="<? echo $Year["value"]; ?>" ><? echo $Year["fullname"]; ?></option>
+                                        <? } ?>
+                                    </select>
+                                    <div class="input-error form-control-input" style="color: Red; display: none;">Year is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Filter End -->
+
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <button type="submit" name="search" class="btn btn-sm btn-primary" onclick="search();">Filter Task</button>
+                                    
+                                    <a href="" onclick="exportAllReport(); return false;" class="btn btn-sm btn-success">Export All</a>
+                                    
+                                    <a href="" onclick="exportFilterReport(); return false;" class="btn btn-sm btn-success">Export Filter</a>
+
+                                    <a href="javascript: window.location.href = 'rpt_task_department_wise_ism.php'" class="btn btn-sm btn-inverse">Reset</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-12">
+                            <table id="tblMyTable" class="table table-igi table-responsive">
+                                <tbody>
+                                    <tr>
+                                        <td align="left">
+                                            <h4>Department Wise ISM Results</h4>
+                                        </td>
+                                        <td align="left"></td>
+                                        <td align="right">
+                                            <img src="assets/img/logo.png" width="100px" height="35px">
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td align="left">
+                                            <b class="Department">Department:</b> 
+                                            <span id="spanDepartment"> - </span>
+                                        </td>
+                                        <td></td>
+                                        <td align="right">
+                                            <b>Print Date:</b> 
+                                            <span id="spanPrintDate"></span>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td align="left">
+                                            <b class="DurationType">Duration Type:</b>
+                                            <span id="spanDurationType"> - </span>
+                                        </td>
+                                        <td align="left">
+                                            <b class="Duration">Duration:</b> 
+                                            <span id="spanMonth"> All </span>
+                                            <span id="spanQuarter"></span>
+                                            <span id="spanYear"></span>
+                                        </td>
+                                         <td align="right">
+                                            <b>Pages:</b> 1
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <table id="tblTable" class="table table-igi table-responsive table-bordered">
+                        <thead>
+                            <tr>
+                                <th width="400px;">Department <br>Name</th>
+                                <th width="100px;">Score <br>Current Month</th>
+                                <th width="100px;">Grade <br>Current Month</th>
+                                <th width="250px;">ISM <br>Codes</th>
+                                <th width="150px;">ISM's <br>Description</th>
+                                <th width="100px;">TAT</th>
+                                <th width="300px;">Ownership</th>
+                                <th width="100px;">Weightage</th>
+                                <th width="100px;">Rating</th>
+                                <th width="100px;">Grade</th>
+                                <th width="100px;">Count of Closed <br>Service Tickets</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody class="table table-bordered">
+                            <?php $cmpTotalLogged = 0; ?>
+                            <?php $GradeCurrentMonth = 0; ?>
+                            <?php $count_ism_where_task_closed = 0; ?>
+
+                            <?php foreach($deprtments as $deprtment): ?>
+                                <?php
+                                    $deprtment_id = $deprtment['id'];
+
+                                    $data2 = $objTaskcatReport->getIsmByDepartmentId($deprtment_id,'','','','');
+
+                                    $colspan1 = count($data2);
+                                    $colspan1 = $colspan1 + 1;
+                                    //print_r($data2); die;
+                                ?>
+                                <tr>
+                                    <td rowspan="<?php echo $colspan1; ?>"><?php echo $deprtment['primary_name']; ?></td>
+
+                                    <?php 
+                                        for($x=0; $x<count($data2); $x++) 
+                                        {
+                                            //For Grade Current Month - Start
+                                            $ism_id1 = $data2[$x]['id'];
+                                            $task_rating1 = $objTaskcatReport->getTaskRating($ism_id1,'','','','',$deprtment_id);
+                                            $task_rating_percetage1 = ($task_rating1[0]['task_within_tat'] / $task_rating1[0]['total_service_request']) * 100;
+
+                                            //$getScoreCurrentMonth = $objTaskcatReport->getScoreCurrentMonth($deprtment_id);
+                                            if($task_rating1[0]['total_closed_service'] > 0)
+                                            {
+                                                $count_ism_where_task_closed += 1;
+                                            }
+
+                                            $GradeCurrentMonth += $task_rating_percetage1;
+                                            //For Grade Current Month - End
+                                        }
+                                    ?>
+
+                                    <td rowspan="<?php echo $colspan1; ?>">
+                                        <?php
+                                            $total_ism = count($data2);
+                                            $GradeCurrentMonth1 = number_format($GradeCurrentMonth / $count_ism_where_task_closed, 2);
+
+                                            if($total_ism > 1)
+                                            {
+                                                print_r($GradeCurrentMonth1 . "%");
+                                            }
+                                            else
+                                            {
+                                                print_r("0%");
+                                            }
+
+                                            //print_r($GradeCurrentMonth);
+                                        ?>
+                                    </td>
+
+                                    <td rowspan="<?php echo $colspan1; ?>">
+                                        <?php
+                                            if($GradeCurrentMonth1 >= "95")
+                                            {
+                                                echo "Outstanding";
+                                            }
+                                            else if($GradeCurrentMonth1 >= "81" AND $GradeCurrentMonth1 < "95")
+                                            {
+                                                echo "Very Good";
+                                            }
+                                            else if($GradeCurrentMonth1 >= "71" AND $GradeCurrentMonth1 <= "80")
+                                            {
+                                                echo "Average";
+                                            }
+                                            else if($GradeCurrentMonth1 <= "70")
+                                            {
+                                                echo "Below Average";
+                                            }
+                                        ?>
+                                    </td>
+                                </tr>
+                                
+                                <?php //print_r($data2); ?>
+
+                                <?php for($i=0; $i<count($data2); $i++) { ?>
+                                    <tr>
+                                        <?php if($data2 != 0) { ?>
+                                            <td><?php echo $data2[$i]['fullname']; ?></td>
+                                            <td><?php echo $data2[$i]['subcat_name'];?></td>
+                                            <td><?php echo $data2[$i]['tat']." Days"; ?></td>
+                                            <td><?php echo $data2[$i]['ownership']; ?></td>
+                                            <td><?php echo $data2[$i]['weightage']; ?></td>
+                                            <td>
+                                                <?php
+                                                    //Rating
+                                                    $ism_id = $data2[$i]['id'];
+                                                    $task_rating = $objTaskcatReport->getTaskRating($ism_id,'','','','',$deprtment_id);
+                                                    //print_r($task_rating);
+                                                    $task_rating_percetage = ($task_rating[0]['task_within_tat'] / $task_rating[0]['total_service_request']) * 100;
+                                                    $rating = number_format($task_rating_percetage,2);
+                                                    print_r($rating . "%");
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <?php 
+                                                    if($task_rating_percetage >= "95")
+                                                    {
+                                                        echo "Outstanding";
+                                                    }
+                                                    else if($task_rating_percetage >= "81" AND $task_rating_percetage < "95")
+                                                    {
+                                                        echo "Very Good";
+                                                    }
+                                                    else if($task_rating_percetage >= "71" AND $task_rating_percetage <= "80")
+                                                    {
+                                                        echo "Average";
+                                                    }
+                                                    else if($task_rating_percetage <= "70")
+                                                    {
+                                                        echo "Below Average";
+                                                    }
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <?php
+                                                    $total_closed_service = $task_rating[0]['total_closed_service'];
+                                                    print_r($total_closed_service);
+                                                ?> 
+                                            </td>
+                                        <?php } else { ?>
+                                            <td class="na" colspan="8">NA</td>
+                                        <?php } ?>
+                                    </tr>
+                                <?php } ?>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+</div>
+<!-- end #content -->
+
+<!-- begin #footer -->
+<?php include('includes/footer.php'); ?>
+<!-- end #footer -->
+
+<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+<script src="assets/plugins/ionRangeSlider/js/ion-rangeSlider/ion.rangeSlider.min.js"></script>
+<script src="assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+<script src="assets/plugins/masked-input/masked-input.min.js"></script>
+<script src="assets/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+<script src="assets/plugins/password-indicator/js/password-indicator.js"></script>
+<script src="assets/plugins/bootstrap-combobox/js/bootstrap-combobox.js"></script>
+<script src="assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+<script src="assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
+<script src="assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput-typeahead.js"></script>
+<script src="assets/plugins/jquery-tag-it/js/tag-it.min.js"></script>
+<script src="assets/plugins/bootstrap-daterangepicker/moment.js"></script>
+<script src="assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script src="assets/plugins/select2/dist/js/select2.min.js"></script>
+<script src="assets/plugins/bootstrap-eonasdan-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<script src="assets/plugins/bootstrap-show-password/bootstrap-show-password.js"></script>
+<script src="assets/plugins/bootstrap-colorpalette/js/bootstrap-colorpalette.js"></script>
+<script src="assets/plugins/jquery-simplecolorpicker/jquery.simplecolorpicker.js"></script>
+<script src="assets/plugins/clipboard/clipboard.min.js"></script>
+<script src="assets/js/form-plugins.demo.min.js"></script>
+
+<script src="assets/plugins/DataTables/media/js/jquery.dataTables.js"></script>
+<script src="assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js"></script>
+<script src="assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
+<script src="assets/js/table-manage-default.demo.min.js"></script>
+<script src="assets/js/apps.min.js"></script>
+<!-- ================== END PAGE LEVEL JS ================== -->
+
+<style type="text/css">
+    .error-val{
+        border: 1px solid red !important;
+        border-radius: 4px !important;
+    }
+
+    .na{
+        border-top: none !important; 
+        border-left: none !important; 
+        text-align: center !important; 
+        margin: 0px !important;
+    }
+
+    /*.select2-container--default{
+        width: 256px !important;
+    }
+
+    #txtCNIC{
+        width: 256px !important;
+    }*/
+</style>
+
+<script>
+    var PrintDate;
+    var SITE_IP = '<?php echo SITE_IP; ?>';
+
+    $(document).ready(function() {
+        App.init();
+        FormPlugins.init();
+        TableManageDefault.init();
+
+        PrintDate = moment().format('YYYY-MM-DD HH:mm');
+        $('#spanPrintDate').html(PrintDate);
+    });
+</script>
+
+<script type="text/javascript">
+    function search()
+    {
+        // Not using Now
+        var getDurationType    = $('#getDurationType').val();
+        var getDepartment      = $('#getDepartment').val();
+        var getComplaintType   = $('#getComplaintType').val();
+        var getMonth           = $('#getMonth').val();
+        var getQuarter         = $('#getQuarter').val();
+        var getYear            = $('#getYear').val();
+
+        //alert(getDurationType); return false;
+
+        var getDurationTypeText   = $('#getDurationType option:selected').text();
+        var getDepartmentText     = $('#getDepartment option:selected').text();
+        var getComplaintTypeText  = $('#getComplaintType option:selected').text();
+        var getMonthText          = $('#getMonth option:selected').text();
+        var getQuarterText        = $('#getQuarter option:selected').text();
+        var getYearText           = $('#getYear option:selected').text();
+
+        $('#spanDurationType').html(getDurationTypeText);
+        $('#spanDepartment').html(getDepartmentText);
+        $('#spanPrintDate').html(PrintDate);
+        $('#spanComplaintType').html(getComplaintTypeText);
+
+        if(getDurationType == 1)
+        {
+            $('#spanMonth').html(getMonthText);
+            $('#spanQuarter').html('');
+            $('#spanYear').html('');
+        }
+        else if(getDurationType == 2)
+        {
+            $('#spanQuarter').html(getQuarterText);
+            $('#spanMonth').html('');
+            $('#spanYear').html('');
+        }
+        else if(getDurationType == 3)
+        {
+            $('#spanYear').html(getYearText);
+            $('#spanQuarter').html('');
+            $('#spanMonth').html('');
+        }
+
+        if(validation())
+        {
+            //alert(getMonth); return false;
+
+            $.ajax({
+                type: 'POST',
+                url: "includes/ajax/action_taskcat_rpt.php",
+                data: 
+                {
+                    'action'            :'search_task_department_wise_ism_rpt',
+                    'getDepartment'     :getDepartment,
+                    'getDurationType'   :getDurationType,
+                    'getMonth'          :getMonth,
+                    'getQuarter'        :getQuarter,
+                    'getYear'           :getYear
+                },
+                success: function(data)
+                {
+                    console.log(data);
+                    var result = data.split("|");
+
+                    if(result[0] == 'success')
+                    {
+                        $('#tblTable tr').remove();
+                        $('#tblTable').html(result[1]); 
+                    }
+                }
+            });
+        }
+    }
+
+    function getcmp_type_ind()
+    {
+        var depart = $('#getDepartment').val();
+        //alert(depart);return false;
+        $.ajax({
+            type: "POST",
+            url: "includes/ajax/action_complaint_rpt.php",
+            data:
+            {
+                action : "get_cmp_type",
+                depart_id: depart
+            }
+            }).done(function (data) {
+                //alert(data);
+                $('#getComplaintType').html(data);
+        });
+    }
+
+    function exportAllReport()
+    {
+        $.ajax({
+            type: "POST",
+            url: "includes/ajax/action_taskcat_rpt.php",
+            data:
+            {
+                'action': 'export_all_task_department_wise_ism_rpt'
+            },
+            success: function(data)
+            {
+                window.open(SITE_IP + "/reports/rpt_task_department_wise_ism_download_all.php");
+            }
+        }).done(function (data) {
+            console.log(data);
+        });
+    }
+
+    function exportFilterReport()
+    {
+        var getDepartment      = $('#getDepartment').val();
+        var getDurationType    = $('#getDurationType').val();
+        var getMonth           = $('#getMonth').val();
+        var getQuarter         = $('#getQuarter').val();
+        var getYear            = $('#getYear').val();
+
+        if(validation())
+        {
+            $.ajax({
+                type: "POST",
+                url: "includes/ajax/action_taskcat_rpt.php",
+                data:
+                {
+                    'action'            :'export_task_department_wise_ism_rpt',
+                    'getDepartment'     :getDepartment,
+                    'getDurationType'   :getDurationType,
+                    'getMonth'          :getMonth,
+                    'getQuarter'        :getQuarter,
+                    'getYear'           :getYear
+                },
+                success: function(data)
+                {
+                    data = data.trim();
+                    var result = data.split("|");
+
+                    departmentName   = result[1];
+                    durationType     = result[2];
+                    month            = result[3];
+                    quarter          = result[4];
+                    year             = result[5];
+
+                    window.open(SITE_IP + "/reports/rpt_task_department_wise_ism_download.php?getDepartment="+departmentName+"&getDurationType="+durationType+"&getMonth="+month+"&getQuarter="+quarter+"&getYear="+year);
+                }
+            }).done(function (data) {
+                console.log(data);
+            });
+        }
+    }
+
+    function showDurationTypeOption()
+    {
+        var getDurationType = $('#getDurationType').val();
+
+        if(getDurationType != 0)
+        {
+            if(getDurationType == 1)
+            {
+                $('#getQuarter').attr('disabled', true);
+                $('#getYear').attr('disabled', true);
+                $('#getMonth').removeAttr("disabled");
+
+                $('#getYear').val("");
+                $('#getQuarter').val("");
+            }
+            else if(getDurationType == 2)
+            {
+                $('#getMonth').attr('disabled', true);
+                $('#getYear').attr('disabled', true);
+                $('#getQuarter').removeAttr("disabled");
+
+                $('#getMonth').val("");
+                $('#getYear').val("");
+            }
+            else if(getDurationType == 3)
+            {
+                $('#getMonth').attr('disabled', true);
+                $('#getQuarter').attr('disabled', true);
+                $('#getYear').removeAttr("disabled");
+
+                $('#getQuarter').val("");
+                $('#getMonth').val("");
+            }
+        }
+    }
+
+    function validation()
+    {
+        //return true;
+        var hasFocus = false;
+        var errCount = 0;
+
+        /*if($('#getDepartment').val() == '') 
+        {
+            $('#getDepartment').addClass('error-val');
+            $('#getDepartment').parent().find('.input-error').show().css('display', 'inline-block');
+            $('#getDepartment').parent().find('.select2-container--default').show().addClass('error-val');
+
+            if (!hasFocus) 
+            {
+                $('#getDepartment').focus();
+                hasFocus = true;
+            }
+            errCount++;
+        }
+        else 
+        {
+            $('#getDepartment').removeClass('error-val');
+            $('#getDepartment').parent().find('.select2-container--default').show().removeClass('error-val');
+            $('#getDepartment').parent().find('.input-error').hide();
+        }*/
+
+        if($('#getMonth').val() == '' && $('#getDurationType').val() == 1) 
+        {
+            $('#getMonth').addClass('error-val');
+            $('#getMonth').parent().find('.input-error').show().css('display', 'inline-block');
+            $('#getMonth').parent().find('.select2-container--default').show().addClass('error-val');
+
+            if (!hasFocus) 
+            {
+                $('#getMonth').focus();
+                hasFocus = true;
+            }
+            errCount++;
+        }
+        else 
+        {
+            $('#getMonth').removeClass('error-val');
+            $('#getMonth').parent().find('.select2-container--default').show().removeClass('error-val');
+            $('#getMonth').parent().find('.input-error').hide();
+        }
+
+        if($('#getQuarter').val() == '' && $('#getDurationType').val() == 2) 
+        {
+            $('#getQuarter').addClass('error-val');
+            $('#getQuarter').parent().find('.input-error').show().css('display', 'inline-block');
+            $('#getQuarter').parent().find('.select2-container--default').show().addClass('error-val');
+
+            if (!hasFocus) 
+            {
+                $('#getQuarter').focus();
+                hasFocus = true;
+            }
+            errCount++;
+        }
+        else 
+        {
+            $('#getQuarter').removeClass('error-val');
+            $('#getQuarter').parent().find('.select2-container--default').show().removeClass('error-val');
+            $('#getQuarter').parent().find('.input-error').hide();
+        }
+
+        if($('#getYear').val() == '' && $('#getDurationType').val() == 3) 
+        {
+            $('#getYear').addClass('error-val');
+            $('#getYear').parent().find('.input-error').show().css('display', 'inline-block');
+            $('#getYear').parent().find('.select2-container--default').show().addClass('error-val');
+
+            if (!hasFocus) 
+            {
+                $('#getYear').focus();
+                hasFocus = true;
+            }
+            errCount++;
+        }
+        else 
+        {
+            $('#getYear').removeClass('error-val');
+            $('#getYear').parent().find('.select2-container--default').show().removeClass('error-val');
+            $('#getYear').parent().find('.input-error').hide();
+        }
+
+        if (errCount > 0) 
+        {
+            $('html, body').animate({scrollTop: 0}, 600);
+            return false;
+        }
+        else
+            return true;
+    }
+</script>
+
+</body>
+</html>
