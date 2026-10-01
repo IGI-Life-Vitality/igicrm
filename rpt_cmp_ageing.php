@@ -14,6 +14,13 @@
     $objComplaintReport = new ComplaintReport();
     $today = date('Y-m-d');
     $data               = $objComplaintReport->countsComplaintAgeing($today, $today,'','','','');
+    $fromVal = (isset($_POST['txtFromDate']) && trim($_POST['txtFromDate']) != '')
+        ? date('m/d/Y', strtotime(trim($_POST['txtFromDate'])))
+        : date('m/d/Y');
+
+    $toVal = (isset($_POST['txtToDate']) && trim($_POST['txtToDate']) != '')
+        ? date('m/d/Y', strtotime(trim($_POST['txtToDate'])))
+        : date('m/d/Y');
 ?>
 
 <!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
@@ -64,7 +71,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>From Date</label>
-                                    <input type="text" class="form-control" id="datetimepicker1" name="txtFromDate" value="<?php echo trim($_POST['txtFromDate'] ?? '') != '' ? date('m/d/Y', strtotime(trim($_POST['txtFromDate']))) : date('m/d/Y'); ?>" placeholder="Start Date" data-date-format="YYYY-MM-DD">
+                                    <input type="text" class="form-control" id="datetimepicker1" name="txtFromDate" value="<?php echo $fromVal; ?>" placeholder="Start Date" data-date-format="YYYY-MM-DD">
                                     <div class="input-error form-control-input" style="color: Red; display: none;">From Date is required</div>
                                 </div>
                             </div>
@@ -72,7 +79,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>To Date</label>
-                                    <input type="text" class="form-control" id="datetimepicker2" name="txtToDate" value="<?php echo trim($_POST['txtToDate'] ?? '') != '' ? date('m/d/Y', strtotime(trim($_POST['txtToDate']))) : date('m/d/Y'); ?>" placeholder="End Date" data-date-format="YYYY-MM-DD">
+                                    <input type="text" class="form-control" id="datetimepicker2" name="txtToDate" value="<?php echo $toVal; ?>" placeholder="End Date" data-date-format="YYYY-MM-DD">
                                     <div class="input-error form-control-input" style="color: Red; display: none;">To Date is required</div>
                                 </div>
                             </div>
