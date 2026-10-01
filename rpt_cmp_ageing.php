@@ -15,12 +15,12 @@
     $today = date('Y-m-d');
     $data               = $objComplaintReport->countsComplaintAgeing($today, $today,'','','','');
     $fromVal = (isset($_POST['txtFromDate']) && trim($_POST['txtFromDate']) != '')
-        ? date('m/d/Y', strtotime(trim($_POST['txtFromDate'])))
-        : date('m/d/Y');
+        ? date('Y-m-d', strtotime(trim($_POST['txtFromDate'])))
+        : date('Y-m-d');
 
     $toVal = (isset($_POST['txtToDate']) && trim($_POST['txtToDate']) != '')
-        ? date('m/d/Y', strtotime(trim($_POST['txtToDate'])))
-        : date('m/d/Y');
+        ? date('Y-m-d', strtotime(trim($_POST['txtToDate'])))
+        : date('Y-m-d');
 ?>
 
 <!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
