@@ -15,9 +15,12 @@ if(isset($_POST))
         $action    = isset($_POST['action']) ? $_POST['action'] : '';
         $FromDate  = isset($_POST['FromDate'])?$_POST['FromDate']: '';
         $ToDate    = isset($_POST['ToDate'])?$_POST['ToDate']: '';
-
+        
         if($action == 'search_cmp_ageing_rpt')
         {
+            if ($FromDate === '' && $ToDate === '') {
+                $FromDate = $ToDate = date('Y-m-d'); // match the format your query expects
+            }
             $Department     = isset($_POST['Department'])?$_POST['Department']:'';
             $Type           = isset($_POST['Type'])?$_POST['Type']:'';
             $Source         = isset($_POST['Source'])?$_POST['Source']:'';
@@ -100,6 +103,9 @@ if(isset($_POST))
         {
             $FromDate  = isset( $_POST['FromDate'] ) ? $_POST['FromDate'] : '';
             $ToDate    = isset( $_POST['ToDate'] )   ? $_POST['ToDate']   : '';
+            if ($FromDate === '' && $ToDate === '') {
+                $FromDate = $ToDate = date('Y-m-d'); // match the format your query expects
+            }
             $Department= isset( $_POST['Department'] )   ? $_POST['Department']   : '';
             $Type      = isset( $_POST['Type'] )   ? $_POST['Type']   : '';
             $Source    = isset( $_POST['Source'] )   ? $_POST['Source']   : '';

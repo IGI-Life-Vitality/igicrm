@@ -12,7 +12,8 @@
     $login_id = $_SESSION['login_id'];
 
     $objComplaintReport = new ComplaintReport();
-    $data               = $objComplaintReport->countsComplaintAgeing('','','','','','');
+    $today = date('Y-m-d');
+    $data               = $objComplaintReport->countsComplaintAgeing($today, $today,'','','','');
 ?>
 
 <!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
@@ -63,7 +64,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>From Date</label>
-                                    <input type="text" class="form-control" id="datetimepicker1" name="txtFromDate" value="<? echo trim($_POST['txtFromDate']) != '' ? date('m/d/Y' ,strtotime(trim($_POST['txtFromDate']))) : ''; ?>" placeholder="Start Date" data-date-format="YYYY-MM-DD">
+                                    <input type="text" class="form-control" id="datetimepicker1" name="txtFromDate" value="<?php echo trim($_POST['txtFromDate'] ?? '') != '' ? date('m/d/Y', strtotime(trim($_POST['txtFromDate']))) : date('m/d/Y'); ?>" placeholder="Start Date" data-date-format="YYYY-MM-DD">
                                     <div class="input-error form-control-input" style="color: Red; display: none;">From Date is required</div>
                                 </div>
                             </div>
@@ -71,7 +72,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>To Date</label>
-                                    <input type="text" class="form-control" id="datetimepicker2" name="txtToDate" value="<? echo trim($_POST['txtToDate']) != '' ? date('m/d/Y' ,strtotime(trim($_POST['txtToDate']))) : ''; ?>" placeholder="End Date" data-date-format="YYYY-MM-DD">
+                                    <input type="text" class="form-control" id="datetimepicker2" name="txtToDate" value="<?php echo trim($_POST['txtToDate'] ?? '') != '' ? date('m/d/Y', strtotime(trim($_POST['txtToDate']))) : date('m/d/Y'); ?>" placeholder="End Date" data-date-format="YYYY-MM-DD">
                                     <div class="input-error form-control-input" style="color: Red; display: none;">To Date is required</div>
                                 </div>
                             </div>
@@ -325,8 +326,13 @@
 <script type="text/javascript">
     function search()
     {
-        var FromDate    = $('#datetimepicker1').val();
-        var ToDate      = $('#datetimepicker2').val();
+        var range = getDateRange();
+        if (range === null) return;
+
+        var FromDate   = range.from;
+        var ToDate     = range.to;
+        // var FromDate    = $('#datetimepicker1').val();
+        // var ToDate      = $('#datetimepicker2').val();
         var Department  = $('#getDepartment').val();
         var Type        = $('#getType').val();
         var Source      = $('#getSource').val();
@@ -402,8 +408,14 @@
 
     function exportFilterReport()
     {
-        var FromDate    = $('#datetimepicker1').val();
-        var ToDate      = $('#datetimepicker2').val();
+        var range = getDateRange();
+        if (range === null) return;
+
+        var FromDate   = range.from;
+        var ToDate     = range.to;
+
+        // var FromDate    = $('#datetimepicker1').val();
+        // var ToDate      = $('#datetimepicker2').val();
         var Department  = $('#getDepartment').val();
         var Type        = $('#getType').val();
         var Source      = $('#getSource').val();
@@ -492,6 +504,27 @@
         }
         else
             return true;
+    }
+    function getDateRange()
+    {
+        var from  = $.trim($('#datetimepicker1').val());
+        var to    = $.trim($('#datetimepicker2').val());
+        var today = moment().format('YYYY-MM-DD'); // match the format your backend expects
+
+        // Neither selected -> default to current date
+        if (from === '' && to === '') {
+            from = today;
+            to   = today;
+            $('#datetimepicker1').val(from);
+            $('#datetimepicker2').val(to);
+        }
+        // Only one selected -> both are required
+        else if (from === '' || to === '') {
+            alert('Please select both Start Date and End Date.');
+            return null;
+        }
+
+        return { from: from, to: to };
     }
 </script>
 
