@@ -22,7 +22,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>Policy Number<span style="color: red;">*</span></label>
-                        <input type="text" id="txtPolicyNumber" name="txtPolicyNumber" class="form-control" placeholder="Policy Number" value="" onblur="customer_data();">
+                        <input type="text" id="txtPolicyNumber" name="txtPolicyNumber" class="form-control" placeholder="Policy Number" value="">
                         <div class="input-error form-control-input" style="color: Red; display: none;">Policy Number is required</div>
                     </div>
                 </div>
@@ -473,51 +473,51 @@
 <script type="text/javascript">
     
    
-    function customer_data()
-    {
-        var PolicyNumber = $('#txtPolicyNumber').val();
-        var type = 1;
+    // function customer_data()
+    // {
+    //     var PolicyNumber = $('#txtPolicyNumber').val();
+    //     var type = 1;
 
-        if(PolicyNumber != '')
-        {
-            $.ajax({
-                type: "POST",
-                url: "includes/ajax/action_complaint.php",
-                data:
-                {
-                    action : "get_customer_data",
-                    PolicyNumber: PolicyNumber,
-                    type : type
-                }
-            }).done(function (data) {
-                    //alert(data);
-                    var res = data.split('|');
-                    //$('#ddlSubCat').html(data);
-                    $('#txtCNIC').val(res[0]);
-                    $('#txtCustomerName').val(res[1]);
-                    $('#txtResponseNumber').val(res[2]);
-                    $('#txtOfficePhone').val(res[3]);
-                    $('#txtEmail').val(res[4]);
-                    $('#txtCustomerEmail').val(res[5]);
-                    $('#txtMobile').val(res[6]);
-                    $('#txtHomePhone').val(res[7]);
-                    $('#txtOfficeAddress').val(res[8]);
+    //     if(PolicyNumber != '')
+    //     {
+    //         $.ajax({
+    //             type: "POST",
+    //             url: "includes/ajax/action_complaint.php",
+    //             data:
+    //             {
+    //                 action : "get_customer_data",
+    //                 PolicyNumber: PolicyNumber,
+    //                 type : type
+    //             }
+    //         }).done(function (data) {
+    //                 //alert(data);
+    //                 var res = data.split('|');
+    //                 //$('#ddlSubCat').html(data);
+    //                 $('#txtCNIC').val(res[0]);
+    //                 $('#txtCustomerName').val(res[1]);
+    //                 $('#txtResponseNumber').val(res[2]);
+    //                 $('#txtOfficePhone').val(res[3]);
+    //                 $('#txtEmail').val(res[4]);
+    //                 $('#txtCustomerEmail').val(res[5]);
+    //                 $('#txtMobile').val(res[6]);
+    //                 $('#txtHomePhone').val(res[7]);
+    //                 $('#txtOfficeAddress').val(res[8]);
                     
-                    if(res[8] != '' || res[9] != '' || res[11] != '')
-                    {
-                        $('#txtCorrespondenceAddress').val(res[8] + " " + res[9] + " " + " " + res[11]);
-                    }
-                    else
-                    {
-                        res[8] = "NA";
-                        res[9] = "NA";
-                        res[11] = "NA";
+    //                 if(res[8] != '' || res[9] != '' || res[11] != '')
+    //                 {
+    //                     $('#txtCorrespondenceAddress').val(res[8] + " " + res[9] + " " + " " + res[11]);
+    //                 }
+    //                 else
+    //                 {
+    //                     res[8] = "NA";
+    //                     res[9] = "NA";
+    //                     res[11] = "NA";
 
-                        $('#txtCorrespondenceAddress').val(res[8] + " " + res[9] + " " + res[11]);
-                    }
-            });
-        }
-    }
+    //                     $('#txtCorrespondenceAddress').val(res[8] + " " + res[9] + " " + res[11]);
+    //                 }
+    //         });
+    //     }
+    // }
 
     function getcmp_type_ind()
     {

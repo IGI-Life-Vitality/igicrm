@@ -21,7 +21,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>Policy Number<span style="color: red;">*</span></label>
-                        <input type="text" id="txtPolicyNumberB" name="txtPolicyNumberB" class="form-control" placeholder="Policy Number" value="" onblur="customer_data_bnk();">
+                        <input type="text" id="txtPolicyNumberB" name="txtPolicyNumberB" class="form-control" placeholder="Policy Number" value="">
                         <div class="input-error form-control-input" style="color: Red; display: none;">Policy Number is required</div>
                     </div>
                 </div>
