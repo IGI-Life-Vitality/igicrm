@@ -169,17 +169,31 @@
                 <th width="100px;">Camplaint Received Date</th>
                 <th width="100px;">Policy#</th>
                 <th width="100px;">Customer Name</th>
+                <th width="100px;">CNIC</th>
                 <th width="100px;">Contact No</th>
+                <th width="100px;">Email Address</th>
+                <th width="100px;">Policy Issuance Date</th>
+                <th width="100px;">Status Of Policy</th>
+                <th width="100px;">Plan Nature</th>
+                <th width="100px;">Product Nature</th>
                 <th width="100px;">Source</th>
                 <th width="100px;">Logged By</th>
-                <th width="100px;">Complaint Type</th>
                 <th width="100px;">Department</th>
+                <th width="100px;">Complaint Type</th>
                 <th width="100px;">Assign To</th>
+                <th width="100px;">Amount of Premium</th>
+                <th width="100px;">Amount of Refund/Loss</th>
+                <th width="100px;">Amount Claim/Fraud Prevent</th>
+                <th width="100px;">Bank Name</th>
+                <th width="100px;">Region</th>
+                <th width="100px;">City</th>
                 <th width="100px;">Priority/TAT</th>
                 <th width="100px;">Status</th>
                 <th width="100px;">Resolution Date</th>
                 <th width="100px;">End Date</th>
                 <th width="100px;">Aging (Overdue)</th>
+                <th width="100px;">Description</th>
+                <th width="100px;">Comments</th>
                 <th width="100px;">Over All Satisfaction</th>
                 <th width="100px;">Resolution Time Satisfaction</th>
                 <th width="100px;">Staff Behavior</th>
@@ -192,20 +206,32 @@
             <?php foreach($data as $row): ?>
                 <tr>
                     <td valign="top"><?php echo $row['complaint_num'] ?></td>
-                    <td valign="top"><?php echo substr($row['create_date'],0,10); ?></td>
+                    <td valign="top"><?php echo !empty($row['create_date']) && strtotime($row['create_date']) ? date('d/m/Y', strtotime($row['create_date'])) : ''  ?></td>
                     <td valign="top"><?php echo !empty($row['received_date']) && strtotime($row['received_date']) ? date('d/m/Y', strtotime($row['received_date'])) : '' ?></td>
                     <td valign="top"><?php echo $row['policy_num'] ?></td>
                     <td valign="top"><?php echo $row['customer_name'] ?></td>
+                    <td valign="top"><?php echo formatCnicNumber($row['cnic']) ?></td>
                     <td valign="top"><?php echo $row['response_number'] ?></td>
+                    <td valign="top"><?php echo $row['email'] ?></td>
+                    <td valign="top"><?php echo $row['policy_issuance_date'] ?></td>
+                    <td valign="top"><?php echo $row['status_policy'] ?></td>
+                    <td valign="top"><?php echo $row['plan_nature'] ?></td>
+                    <td valign="top"><?php echo $row['product_name'] ?></td>
                     <td valign="top"><?php echo $row['Source'] ?></td>
                     <td valign="top"><?php echo $row['ReleasedBy'] ?></td>
-                    <td valign="top"><?php echo $row['ComplaintType'] ?></td>
                     <td valign="top"><?php echo $row['depart'] ?></td>
+                    <td valign="top"><?php echo $row['ComplaintType'] ?></td>
                     <td valign="top"><?php echo $row['AssignedTo'] ?></td>
+                    <td valign="top"><?php echo $row['premium_amount'] ?></td>
+                    <td valign="top"><?php echo $row['refund_amount'] ?></td>
+                    <td valign="top"><?php echo $row['claim_amount'] ?></td>
+                    <td valign="top"><?php echo $row['bank'] ?></td>
+                    <td valign="top"><?php echo $row['region'] ?></td>
+                    <td valign="top"><?php echo $row['city'] ?></td>
                     <td valign="top"><?php echo $row['tat'] ?></td>
-                    <td valign="top"><?php echo $row['cmpStatus'] ?></td>
-                    <!-- <td><?php echo substr($row['close_date'],0,10); ?></td> -->
-                     <td>
+                    <td valign="top"><?php echo ($row['cmpStatus'] == 'closed') ? 'Resolved' : $row['cmpStatus']  ?></td>
+                    <!-- <td><?php echo !empty($row['close_date']) && strtotime($row['close_date']) ? date('d/m/Y', strtotime($row['close_date'])) : ''; ?></td> -->
+                    <td>
                         <?php
                             if ($row['cmpStatus'] == 'closed' || $row['cmpStatus'] == 3) {
                                 echo !empty($row['close_date']) ? date('d/m/Y', strtotime($row['close_date'])) : '';
@@ -214,7 +240,7 @@
                             }
                         ?>
                     </td>
-                    <td valign="top"><?php echo date('d/m/y',strtotime($row['end_date'])) ?></td>
+                    <td><?php echo date('d/m/y',strtotime($row['end_date'])) ?></td>
                     <td valign="top">
                         <?php
                             // 1st date
@@ -222,7 +248,7 @@
 
                             // 2nd date
                             $createdDate=($row['received_date'] == null || $row['received_date'] == '' || $row['received_date'] == '0000-00-00') ? substr($row['create_date'],0,10) : substr($row['received_date'],0,10);
-                            $cdate  = $createdDate;
+                            $cdate  = $createdDate ;
                             $date   = strtotime($cdate);
                             $tat    = substr($row['tat'],0,1);
                             $create_date = strtotime("+$tat day", $date);
@@ -243,7 +269,8 @@
                             }
                         ?>
                     </td>
-                    
+                    <td valign="top"><?php echo $row['description']; ?></td>
+                    <td valign="top"><?php echo $row['comments'] ?></td>
                     <td valign="top"><?php echo $row['over_all_satisfaction'] ?></td>
                     <td valign="top"><?php echo $row['resolution_time_satisfaction'] ?></td>
                     <td valign="top"><?php echo $row['staff_behavior'] ?></td>
