@@ -117,7 +117,8 @@
                 <th width="100px;">Bank Name</th>
                 <th width="100px;">Region</th>
                 <th width="100px;">City</th>
-                <th width="100px;">Priority/TAT</th>
+                <th width="100px;">Priority</th>
+                <th width="100px;">TAT</th>
                 <th width="100px;">Status</th>
                 <th width="100px;">Resolution Date</th>
                 <th width="100px;">End Date</th>
@@ -158,6 +159,7 @@
                     <td valign="top"><?php echo $row['bank'] ?></td>
                     <td valign="top"><?php echo $row['region'] ?></td>
                     <td valign="top"><?php echo $row['city'] ?></td>
+                    <td valign="top"><?php echo $row['priority_id'] ?></td>
                     <td valign="top"><?php echo $row['tat'] ?></td>
                     <td valign="top"><?php echo ($row['cmpStatus'] == 'closed') ? 'Resolved' : $row['cmpStatus']  ?></td>
                     <!-- <td><?php echo !empty($row['close_date']) && strtotime($row['close_date']) ? date('d/m/Y', strtotime($row['close_date'])) : ''; ?></td> -->

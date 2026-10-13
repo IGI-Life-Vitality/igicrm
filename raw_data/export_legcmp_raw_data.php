@@ -55,7 +55,8 @@ header('Content-Disposition: attachment; filename="export_legal_complaint_raw_da
             <th>AM Name</th>
             <th>Region</th>
             <th>City</th>
-            <th>Priority/TAT</th>
+            <th>Priority</th>
+            <th>TAT</th>
             <th>Status</th>
             <th>Resolution Date</th>
             <th>End Date</th>
@@ -133,6 +134,7 @@ header('Content-Disposition: attachment; filename="export_legal_complaint_raw_da
 
             <td><?php echo $row['city']; ?></td>
 
+            <td><?php echo $row['priority_id']; ?></td>
             <td><?php echo $row['tat']; ?></td>
 
             <td>

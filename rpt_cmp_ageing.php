@@ -395,22 +395,20 @@
         /*}*/
     }
 
+    function downloadReport(url)
+    {
+        var iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = url;
+        document.body.appendChild(iframe);
+        setTimeout(function () {
+            document.body.removeChild(iframe);
+        }, 60000);
+    }
+
     function exportAllReport()
-    {        
-        $.ajax({
-            type: "POST",
-            url: "includes/ajax/action_complaint_rpt.php",
-            data:
-            {
-                'action': 'export_all_cmp_ageing_rpt'
-            },
-            success: function(data)
-            {
-                window.open(SITE_IP + "/reports/rpt_cmp_ageing_download_all.php");
-            }
-        }).done(function (data) {
-            console.log(data);
-        });
+    {
+        downloadReport(SITE_IP + "/reports/rpt_cmp_ageing_download_all.php");
     }
 
     function exportFilterReport()
@@ -418,48 +416,22 @@
         var range = getDateRange();
         if (range === null) return;
 
-        var FromDate   = range.from;
-        var ToDate     = range.to;
-
-        // var FromDate    = $('#datetimepicker1').val();
-        // var ToDate      = $('#datetimepicker2').val();
+        var FromDate    = range.from;
+        var ToDate      = range.to;
         var Department  = $('#getDepartment').val();
         var Type        = $('#getType').val();
         var Source      = $('#getSource').val();
         var Status      = $('#getStatus').val();
 
-        $.ajax({
-            type: "POST",
-            url: "includes/ajax/action_complaint_rpt.php",
-            data:
-            {
-                'action': 'export_cmp_ageing_rpt',
-                'FromDate'   :FromDate,
-                'ToDate'     :ToDate,
-                'Department' :Department,
-                'Type'       :Type,
-                'Source'     :Source,
-                'Status'     :Status
-            },
-            success: function(data)
-            {
-                data = data.trim();
-                var result = data.split("|");
+        var url = SITE_IP + "/reports/rpt_cmp_ageing_download.php"
+                + "?FromDate="   + encodeURIComponent(FromDate)
+                + "&ToDate="     + encodeURIComponent(ToDate)
+                + "&Department=" + encodeURIComponent(Department)
+                + "&Type="       + encodeURIComponent(Type)
+                + "&Source="     + encodeURIComponent(Source)
+                + "&Status="     + encodeURIComponent(Status);
 
-                //alert(result);
-
-                FromDate    = result[1];
-                ToDate      = result[2];
-                Department  = result[3];
-                Type        = result[4];
-                Source      = result[5];
-                Status      = result[6];
-
-                window.open(SITE_IP + "/reports/rpt_cmp_ageing_download.php?FromDate="+FromDate+"&ToDate="+ToDate+"&Department="+Department+"&Type="+Type+"&Source="+Source+"&Status="+Status);
-            }
-        }).done(function (data) {
-            console.log(data);
-        });
+        downloadReport(url);
     }
 
     // Not using yet
