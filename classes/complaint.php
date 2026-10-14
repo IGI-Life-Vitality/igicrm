@@ -38,7 +38,7 @@ class Complaint
             VALUES('$response','$policynum','$description','$callback_num','$correspondenceAddress','$office_addr','$email','$office_num','$mobile_num','$residence_num','$is_email','$cust_email','$is_sms','$response_no','$is_call_back','$bank','$txtPremiumAmount','$txtRefundAmount','$txtAmountClaimed','$cityL','$ddlRegion','$reported_dt','$receivedDate')";
           $result = $this->mysqli_lib->insert($query);
           // Comments By Kamran Jabbar
-          $msg = "Dear Customer,\\nThank you for contacting IGI Life Insurance.\\n Your complaint has been registered and is in process. Your complaint reference number is:" . $counter_display ."\\n We aim to address your complaint in 30 days.\\n For any assistance or further information, please contact us at 021-111-111-711.";
+          $msg = "Dear Customer,\\nThank you for contacting IGI Life Insurance.\\nYour complaint has been registered and is in process. Your complaint reference number is: " . $counter_display ."\\nWe aim to address your complaint in 30 days.\\nFor any assistance or further information, please contact us at 021-111-111-711.";
           $msg = str_replace(' ', '%20', $msg);
           $mobile_num = $this->check_num($mobile_num);
           $url ="http://10.40.64.15/igicrm/send-sms.php?msg=$msg&msisdn=$mobile_num";
@@ -152,8 +152,7 @@ class Complaint
                 $result = $this->mysqli_lib->insert($query);
 
                 // Comments By Kamran Jabbar
-                $msg = "Dear Customer,Thank you for contacting IGI Life Insurance. Your complaint has been registered and is in process. Your complaint reference No is:" . $counter_display;
-                $msg = str_replace(' ', '%20', $msg);
+                $msg = "Dear Customer,\\nThank you for contacting IGI Life Insurance.\\nYour complaint has been registered and is in process. Your complaint reference number is: " . $counter_display ."\\nWe aim to address your complaint in 30 days.\\nFor any assistance or further information, please contact us at 021-111-111-711.";                $msg = str_replace(' ', '%20', $msg);
                 $mobile_num = $this->check_num($mobile_num);
                 $url ="http://10.40.64.15/igicrm/send-sms.php?msg=$msg&msisdn=$mobile_num";
                 $res = file_get_contents($url);
@@ -218,8 +217,7 @@ class Complaint
             $result = $this->mysqli_lib->insert($query);
     
             // Comments By Kamran Jabbar
-            $msg = "Dear Customer,\\nThank you for contacting IGI Life Insurance. Your complaint has been registered and is in process. Your complaint reference No is:" . $counter_display;
-           
+            $msg = "Dear Customer,\\nThank you for contacting IGI Life Insurance.\\nYour complaint has been registered and is in process. Your complaint reference number is: " . $counter_display ."\\nWe aim to address your complaint in 30 days.\\nFor any assistance or further information, please contact us at 021-111-111-711.";           
             $msg = str_replace(' ', '%20', $msg);
             $mobile_num = $this->check_num($mobile_num);
             $url ="http://10.40.64.15/igicrm/send-sms.php?msg=$msg&msisdn=$mobile_num";
@@ -285,7 +283,7 @@ class Complaint
               $result = $this->mysqli_lib->insert($query);
 
               // Comments By Kamran Jabbar
-              $msg = "Dear Customer,\\nThank you for contacting IGI Life Insurance. Your complaint has been registered and is in process. Your complaint reference No is:" . $counter_display;
+              $msg = "Dear Customer,\\nThank you for contacting IGI Life Insurance.\\nYour complaint has been registered and is in process. Your complaint reference number is: " . $counter_display ."\\nWe aim to address your complaint in 30 days.\\nFor any assistance or further information, please contact us at 021-111-111-711.";
 
               $msg = str_replace(' ', '%20', $msg);
               $mobile_num = $this->check_num($mobile_num);
@@ -358,7 +356,7 @@ class Complaint
               VALUES('$response','$policynum','$description','$callback_num','$correspondenceAddress','$office_addr','$email','$office_num','$mobile_num','$residence_num','$is_email','$cust_email','$is_sms','$response_no','$is_call_back','0','$bank','$txtPremiumAmount','$txtRefundAmount','$txtAmountClaimed','$cityL','$ddlRegion','$reported_dt','$receivedDate')";
 
               $result = $this->mysqli_lib->insert($query);
-              $msg = "Dear Customer,\\nThank you for contacting IGI Life Insurance. Your complaint has been registered and is in process. Your complaint reference No is:" . $counter_display;
+              $msg = "Dear Customer,\\nThank you for contacting IGI Life Insurance.\\nYour complaint has been registered and is in process. Your complaint reference number is: " . $counter_display ."\\nWe aim to address your complaint in 30 days.\\nFor any assistance or further information, please contact us at 021-111-111-711.";
               $msg = str_replace(' ', '%20', $msg);
               $mobile_num = $this->check_num($mobile_num);
               $url ="http://10.40.64.15/igicrm/send-sms.php?msg=$msg&msisdn=$mobile_num";
@@ -428,7 +426,7 @@ class Complaint
 
                $result = $this->mysqli_lib->insert($query);
 
-               $msg = "Dear Customer,\\nThank you for contacting IGI Life Insurance. Your complaint has been registered and is in process. Your complaint reference No is:" . $counter_display;
+              $msg = "Dear Customer,\\nThank you for contacting IGI Life Insurance.\\nYour complaint has been registered and is in process. Your complaint reference number is: " . $counter_display ."\\nWe aim to address your complaint in 30 days.\\nFor any assistance or further information, please contact us at 021-111-111-711.";
               $msg = str_replace(' ', '%20', $msg);
               $mobile_num = $this->check_num($mobile_num);
               $url ="http://10.40.64.15/igicrm/send-sms.php?msg=$msg&msisdn=$mobile_num";
