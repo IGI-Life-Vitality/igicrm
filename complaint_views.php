@@ -406,14 +406,13 @@
 
         window.location.href = url;
     }
-    $(document).ready(function () {
+    
     $('.row input, .row select').on('keypress', function (e) {
             if (e.which === 13) {
                 e.preventDefault(); // Prevent form submission
                 search();
             }
         });
-    });
 </script>
 
 </body>
