@@ -39,7 +39,7 @@ if(!empty($data)) {
             // }
         }
 
-        echo "email send successfully|$current_date|$complaint_num\n";
+        
         if(!empty($customer_email)){
             if(sendMail($customer_name, $customer_email, $complaint_num)){
                 $objComplaint->insertSMSInterim($source, $complaint_num, $customer_name, $customer_email, $response_number, $create_date, $status_id, $days_since_complaint,'email');
