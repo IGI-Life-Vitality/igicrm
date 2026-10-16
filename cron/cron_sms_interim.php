@@ -41,10 +41,10 @@ if(!empty($data)) {
 
         if(!empty($customer_email)){
 
-            /*if(sendMail($customer_name, $customer_email, $complaint_num)){
-                $objComplaint->insertSMSInterim($source, $complaint_num, $customer_name, $customer_email, $response_number, $create_date, $status_id,'email');
+            if(sendMail($customer_name, $customer_email, $complaint_num)){
+                $objComplaint->insertSMSInterim($source, $complaint_num, $customer_name, $customer_email, $response_number, $create_date, $status_id, $days_since_complaint,'email');
                 echo $customer_email;
-            }*/
+            }
 
 
         }
@@ -65,12 +65,12 @@ function sendMail($customer_name, $customer_email, $complaint_num) {
     try {
         // Server settings
         $mail->isSMTP();
-        $mail->Host       ='10.9.0.4';
+        $mail->Host       = $email_host;
         $mail->SMTPAuth   = true;
-        $mail->Username   ="services.life@igi.com.pk";
-        $mail->Password   = "Customer@123";
+        $mail->Username   = $email_username;
+        $mail->Password   = $email_password;
         $mail->SMTPSecure = "";
-        $mail->Port       = '26';
+        $mail->Port       = $port;
         $mail->SMTPDebug = 2;
 
         // Sender
