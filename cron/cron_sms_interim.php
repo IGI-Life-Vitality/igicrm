@@ -83,7 +83,7 @@ function sendMail($customer_name, $customer_email, $complaint_num) {
         $mail->Body    = $body;
         //$mail->AltBody = $altBody ?: strip_tags($body);
 
-        echo $mail->send();die;
+        echo 'Email sent successfully: '.$mail->send();die;
         return true;
     } catch (Exception $e) {
         return "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
