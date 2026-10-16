@@ -31,12 +31,12 @@ if(!empty($data)) {
 
         if (!empty($response_number)){
 
-            // if (sendSMS($customer_name, $complaint_num, $response_number)){
-            //     $objComplaint->insertSMSInterim($source, $complaint_num, $customer_name, $customer_email, $response_number, $current_date, $status_id, $days_since_complaint, 'sms');
-            //     echo "sms send successfully|$current_date|$response_number\n";
-            // } else {
-            //     echo "sms send failed|$current_date|$response_number\n";
-            // }
+            if (sendSMS($customer_name, $complaint_num, $response_number)){
+                $objComplaint->insertSMSInterim($source, $complaint_num, $customer_name, $customer_email, $response_number, $current_date, $status_id, $days_since_complaint, 'sms');
+                echo "sms send successfully|$current_date|$response_number\n";
+            } else {
+                echo "sms send failed|$current_date|$response_number\n";
+            }
         }
 
         if(!empty($customer_email)){
@@ -83,7 +83,7 @@ function sendMail($customer_name, $customer_email, $complaint_num) {
         $mail->Body    = $body;
         //$mail->AltBody = $altBody ?: strip_tags($body);
 
-        echo 'Email sent successfully: '.$mail->send();die;
+        echo 'Email sent successfully: '.$mail->send();
         return true;
     } catch (Exception $e) {
         return "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";

@@ -40,10 +40,10 @@ if(!empty($data))
 
         //For Users level Escalation
         $get_escalation_detail = $objComplaint->GetEscalationUserByComplType($cmp_type_id);
-        $escalation_ids_1 = $get_escalation_detail['level1'];
-        $escalation_ids_2 = $get_escalation_detail['level2'];
-        $escalation_ids_1 = split(",", $escalation_ids_1);
-        $escalation_ids_2 = split(",", $escalation_ids_2);
+        $escalation_ids_1 = !empty($get_escalation_detail['level1']) ? $get_escalation_detail['level1'] : '';
+        $escalation_ids_2 = !empty($get_escalation_detail['level2']) ? $get_escalation_detail['level2'] : '';
+        $escalation_ids_1 = array_filter(explode(",", $escalation_ids_1), 'strlen');
+        $escalation_ids_2 = array_filter(explode(",", $escalation_ids_2), 'strlen');
 
         /*echo "<pre>";
             print_r($escalation_ids);
@@ -71,6 +71,11 @@ if(!empty($data))
                 $users_detail = $objComplaint->GetUsersById($escalation_id_1);
                 $users_name   = $users_detail['first_name'] . " " . $users_detail['last_name'];
                 $users_email  = $users_detail['email'];
+
+                if (!filter_var($users_email, FILTER_VALIDATE_EMAIL)) {
+                    echo "Skipped Level 1: no valid email for user id $escalation_id_1\n";
+                    continue;
+                }
 
                 $sb = "";
                 $sb .="Dear $users_name Team,<br /> <br />";
@@ -134,11 +139,22 @@ if(!empty($data))
      	}
      	elseif ($count == 0) //For 6th day
      	{
+            $users_email = '';
+            $users_name  = '';
             foreach($escalation_ids_2 as $escalation_id_2)
             {    
                 $users_detail = $objComplaint->GetUsersById($escalation_id_2);
+                if (!filter_var($users_detail['email'], FILTER_VALIDATE_EMAIL)) {
+                    echo "Skipped Level 2: no valid email for user id $escalation_id_2\n";
+                    continue;
+                }
                 $users_name   = $users_detail['first_name'] . " " . $users_detail['last_name'];
                 $users_email  = $users_detail['email'];
+            }
+
+            if (!filter_var($users_email, FILTER_VALIDATE_EMAIL)) {
+                echo "Skipped Level 2: no valid recipient for complaint $cmp_num\n";
+                continue;
             }
 
   		    $sb = "";
