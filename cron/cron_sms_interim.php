@@ -31,16 +31,16 @@ if(!empty($data)) {
 
         if (!empty($response_number)){
 
-            if (sendSMS($customer_name, $complaint_num, $response_number)){
-                $objComplaint->insertSMSInterim($source, $complaint_num, $customer_name, $customer_email, $response_number, $current_date, $status_id, $days_since_complaint, 'sms');
-                echo "sms send successfully|$current_date|$response_number\n";
-            } else {
-                echo "sms send failed|$current_date|$response_number\n";
-            }
+            // if (sendSMS($customer_name, $complaint_num, $response_number)){
+            //     $objComplaint->insertSMSInterim($source, $complaint_num, $customer_name, $customer_email, $response_number, $current_date, $status_id, $days_since_complaint, 'sms');
+            //     echo "sms send successfully|$current_date|$response_number\n";
+            // } else {
+            //     echo "sms send failed|$current_date|$response_number\n";
+            // }
         }
 
         if(!empty($customer_email)){
-
+echo "email send successfully|$current_date|$customer_email\n";
             if(sendMail($customer_name, $customer_email, $complaint_num)){
                 $objComplaint->insertSMSInterim($source, $complaint_num, $customer_name, $customer_email, $response_number, $create_date, $status_id, $days_since_complaint,'email');
                 echo $customer_email;
