@@ -65,10 +65,9 @@ function sendMail($customer_name, $customer_email, $complaint_num) {
         // Server settings
         $mail->isSMTP();
         $mail->Host       = $email_host;
-        $mail->SMTPAuth   = true;
-        $mail->Username   = $email_username;
-        $mail->Password   = $email_password;
+        $mail->SMTPAuth   = false;
         $mail->SMTPSecure = "";
+        $mail->SMTPAutoTLS = false;
         $mail->Port       = $port;
         $mail->SMTPDebug = 2;
 

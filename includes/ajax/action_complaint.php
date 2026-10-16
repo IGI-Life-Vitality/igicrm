@@ -580,7 +580,6 @@ if(isset($_POST))
                     $mail = new PHPMailer(true);
 
                     //$mail->isSMTP();                                          // Set mailer to use SMTP
-                    //$mail->Host = '10.9.0.4';                               // Specify main and backup SMTP servers
                     $mail->Host = $email_host; 
                     $mail->SMTPAuth = true;                                     // Enable SMTP authentication
                     //$mail->Username = 'services.life@igi.com.pk';              // SMTP username
@@ -662,7 +661,6 @@ if(isset($_POST))
                     $mail = new PHPMailer(true);
 
                     //$mail->isSMTP();                                          // Set mailer to use SMTP
-                    //$mail->Host = '10.9.0.4';                               // Specify main and backup SMTP servers
                     $mail->Host = $email_host; 
                     $mail->SMTPAuth = true;                                     // Enable SMTP authentication
                     //$mail->Username = 'services.life@igi.com.pk';              // SMTP username
@@ -738,7 +736,6 @@ if(isset($_POST))
                     $mail = new PHPMailer(true);
 
                     //$mail->isSMTP();                                          // Set mailer to use SMTP
-                    //$mail->Host = '10.9.0.4';                               // Specify main and backup SMTP servers
                     $mail->Host = $email_host; 
                     $mail->SMTPAuth = true;                                     // Enable SMTP authentication
                     //$mail->Username = 'services.life@igi.com.pk';              // SMTP username
@@ -819,7 +816,6 @@ if(isset($_POST))
                     $mail = new PHPMailer(true);
 
                     //$mail->isSMTP();                                          // Set mailer to use SMTP
-                    //$mail->Host = '10.9.0.4';                               // Specify main and backup SMTP servers
                     $mail->Host = $email_host; 
                     $mail->SMTPAuth = true;                                     // Enable SMTP authentication
                     //$mail->Username = 'services.life@igi.com.pk';              // SMTP username
@@ -895,7 +891,6 @@ if(isset($_POST))
                     $mail = new PHPMailer(true);
 
                     //$mail->isSMTP();                                          // Set mailer to use SMTP
-                    //$mail->Host = '10.9.0.4';                               // Specify main and backup SMTP servers
                     $mail->Host = $email_host; 
                     $mail->SMTPAuth = true;                                     // Enable SMTP authentication
                     //$mail->Username = 'services.life@igi.com.pk';              // SMTP username
@@ -972,7 +967,6 @@ if(isset($_POST))
                         $mail = new PHPMailer(true);
 
                         //$mail->isSMTP();                                          // Set mailer to use SMTP
-                        //$mail->Host = '10.9.0.4';                               // Specify main and backup SMTP servers
                         $mail->Host = $email_host; 
                         $mail->SMTPAuth = true;                                     // Enable SMTP authentication
                         //$mail->Username = 'services.life@igi.com.pk';              // SMTP username
