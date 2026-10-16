@@ -12,7 +12,7 @@ require_once('/var/www/html/igicrm/third_party/PHPMailer/PHPMailerAutoload.php')
 $objComplaint = new Complaint();
 $data 		  = $objComplaint->GetComplaintInProcess();
 $date 		  = date('Y-m-d');
-
+$current_datetime   = date('Y-m-d H:i:s');
 /*echo "<pre>";
 	print_r($data);
 echo "</pre>";die;*/
@@ -121,11 +121,13 @@ if(!empty($data))
 
                     if($mail->send()) 
                     {
-                        `echo "email send successfully|$current_datetime|$to_email" >> /tmp/email_complaint.log`;
+                        file_put_contents('/tmp/email_complaint.log', "email send successfully|$current_datetime|$to_email\n", FILE_APPEND | LOCK_EX);
+                        echo "email send successfully|$current_datetime|$to_email\n";
                     }
                     else
                     {
-                        `echo "email send failed|$current_datetime|$to_email" >> /tmp/email_complaint.log`;
+                        file_put_contents('/tmp/email_complaint.log', "email send failed|$current_datetime|$to_email\n", FILE_APPEND | LOCK_EX);
+                        echo "email send failed|$current_datetime|$to_email\n";
                     }
                 }
                 catch (phpmailerException $e) 
@@ -139,22 +141,11 @@ if(!empty($data))
      	}
      	elseif ($count == 0) //For 6th day
      	{
-            $users_email = '';
-            $users_name  = '';
             foreach($escalation_ids_2 as $escalation_id_2)
             {    
                 $users_detail = $objComplaint->GetUsersById($escalation_id_2);
-                if (!filter_var($users_detail['email'], FILTER_VALIDATE_EMAIL)) {
-                    echo "Skipped Level 2: no valid email for user id $escalation_id_2\n";
-                    continue;
-                }
                 $users_name   = $users_detail['first_name'] . " " . $users_detail['last_name'];
                 $users_email  = $users_detail['email'];
-            }
-
-            if (!filter_var($users_email, FILTER_VALIDATE_EMAIL)) {
-                echo "Skipped Level 2: no valid recipient for complaint $cmp_num\n";
-                continue;
             }
 
   		    $sb = "";
@@ -200,11 +191,13 @@ if(!empty($data))
 
                 if($mail->send()) 
                 {
-                    `echo "email send successfully|$current_datetime|$to_email" >> /tmp/email_complaint.log`;
+                    file_put_contents('/tmp/email_complaint.log', "email send successfully|$current_datetime|$to_email\n", FILE_APPEND | LOCK_EX);
+                    echo "email send successfully|$current_datetime|$to_email\n";
                 }
                 else
                 {
-                    `echo "email send failed|$current_datetime|$to_email" >> /tmp/email_complaint.log`;
+                    file_put_contents('/tmp/email_complaint.log', "email send failed|$current_datetime|$to_email\n", FILE_APPEND | LOCK_EX);
+                    echo "email send failed|$current_datetime|$to_email\n";
                 }
 	    }
             catch (phpmailerException $e) 
