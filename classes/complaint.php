@@ -1276,7 +1276,7 @@ class Complaint
         }
         elseif($progress == '11')   //For OnHold
         {
-            $progress == '100';
+            $progress = '100';
             $status_id = '4';
             $onhold = ", forward_date = NOW() , close_date = NOW()";
         }
@@ -1399,7 +1399,7 @@ class Complaint
         }
         elseif($progress == '11')   //For OnHold
         {
-            $progress == '100';
+            $progress = '100';
             $status_id = '4';
             $onhold = ", forward_date = NOW() , close_date = NOW()";
         }
@@ -1528,7 +1528,7 @@ class Complaint
         }
         elseif($progress == '11')   // For OnHold
         {
-            $progress == '100';
+            $progress = '100';
             $status_id = '4';
             $onhold = ", forward_date = NOW() , close_date = NOW()";
         }
@@ -1672,7 +1672,7 @@ class Complaint
         }
         elseif($progress == '11')
         {
-            $progress == '100';
+            $progress = '100';
             $status_id = '4';
             $onhold = ", forward_date = NOW() , close_date = NOW()";
         }
@@ -1776,7 +1776,7 @@ class Complaint
         }
         elseif($progress == '11')
         {
-            $progress == '100';
+            $progress = '100';
             $status_id = '4';
             $onhold = ", forward_date = NOW() , close_date = NOW()";
         }
@@ -1904,7 +1904,7 @@ class Complaint
         }
         elseif($progress == '11')
         {
-            $progress == '100';
+            $progress = '100';
             $status_id = '4';
             $onhold = ", forward_date = NOW() , close_date = NOW()";
         }
@@ -2032,7 +2032,7 @@ class Complaint
         }
         elseif($progress == '11')
         {
-            $progress == '100';
+            $progress = '100';
             $status_id = '4';
             $onhold = ", forward_date = NOW() , close_date = NOW()";
         }
