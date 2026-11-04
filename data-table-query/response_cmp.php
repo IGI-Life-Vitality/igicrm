@@ -190,7 +190,7 @@
         }
         elseif($status_id == 3)
         {
-            $cmp_status = "Closed";
+            $cmp_status = "Resolved";
             $btnType = "btn-warning";
         }
         elseif($status_id == 4)

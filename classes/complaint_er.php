@@ -695,8 +695,9 @@ class Complaint
         }
         elseif($progress == '11')
         {
+          $progress == '100';
           $status_id = '4';
-          $onhold = ", forward_date = NOW()";
+          $onhold = ", forward_date = NOW() , close_date = NOW()";
         }
         else
         {
@@ -803,8 +804,9 @@ class Complaint
         }
         elseif($progress == '11')
         {
+          $progress == '100';
           $status_id = '4';
-          $onhold = ", forward_date = NOW()";
+          $onhold = ", forward_date = NOW() , close_date = NOW()";
         }
         else
         {
@@ -922,8 +924,9 @@ class Complaint
         }
         elseif($progress == '11')
         {
+          $progress == '100';
           $status_id = '4';
-          $onhold = ", forward_date = NOW()";
+          $onhold = ", forward_date = NOW() , close_date = NOW()";
         }
         elseif($progress == '99')
         {
@@ -1059,8 +1062,9 @@ class Complaint
         }
          elseif($progress == '11')
         {
+          $progress == '100';
           $status_id = '4';
-          $onhold = ", forward_date = NOW()";
+          $onhold = ", forward_date = NOW() , close_date = NOW()";
         }
         else
         {
@@ -1152,8 +1156,9 @@ class Complaint
         }
         elseif($progress == '11')
         {
+          $progress == '100';
           $status_id = '4';
-          $onhold = ", forward_date = NOW()";
+          $onhold = ", forward_date = NOW() , close_date = NOW()";
         }
         else
         {
@@ -1268,8 +1273,9 @@ class Complaint
         }
         elseif($progress == '11')
         {
+          $progress == '100';
           $status_id = '4';
-          $onhold = ", forward_date = NOW()";
+          $onhold = ", forward_date = NOW() , close_date = NOW()";
         }
         else
         {
@@ -1380,8 +1386,9 @@ class Complaint
         }
         elseif($progress == '11')
         {
+          $progress == '100';
           $status_id = '4';
-          $onhold = ", forward_date = NOW()";
+          $onhold = ", forward_date = NOW() , close_date = NOW()";
         }
         elseif($progress == '1000')
         {
