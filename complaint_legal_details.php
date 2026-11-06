@@ -29,7 +29,7 @@
             $data = $objComplaint->GetComplaintByIdLegal($complaint_id,$cmode);
             $activity_data = $objComplaint->GetComplaintStatusById($complaint_id,$cmode);
 
-            $dis_button = ($data[0]['status_id'] == 3 || $data[0]['status_id'] == 6 || $data[0]['user_id'] != $login_id && $data[0]['user_id'] != 0 ) ? "disabled='true'" : "";
+            $dis_button = ($data[0]['status_id'] == 3 || $data[0]['status_id'] == 4 || $data[0]['status_id'] == 6 || $data[0]['user_id'] != $login_id && $data[0]['user_id'] != 0 ) ? "disabled='true'" : "";
 
             $dis_button_invalid     = ($data[0]['status_id'] == 5 && $data[0]['group_id'] == 0 && $data[0]['user_id'] == 0 && $data[0]['user_id'] != $login_id && $data[0]['agent_id'] != $login_id) ? "disabled='true'" : "";
             $dis_btn_once_invalid   = ($data[0]['status_id'] == 5 && $data[0]['user_id'] == $login_id && $data[0]['progress'] == 0) ? "disabled='true'" : "";

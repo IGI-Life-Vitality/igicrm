@@ -493,6 +493,7 @@ class Complaint
 
     function ForwardComplaint($complaint_id,$department,$users, $comments)
     {
+        $comments = $this->mysqli_lib->escape($comments);
         $query = "UPDATE tbl_complaints SET comments = '$comments', comments_progress = '', department_id = '$department', user_id = '$users', status_id = '2', forward_date = NOW() WHERE complaint_id = '$complaint_id'";
         $this->mysqli_lib->update($query);
         return $response = "success";
@@ -519,7 +520,7 @@ class Complaint
             $status_id = '2';
         }
 
-        $query = "UPDATE tbl_complaints SET channel = '$channel', comments_progress = '$notes', progress = '$progress', status_id = '$status_id' $query_part WHERE complaint_id = '$complaint_id'";
+        $query = "UPDATE tbl_complaints SET channel = '$channel', comments_progress = '".$this->mysqli_lib->escape($notes)."', progress = '$progress', status_id = '$status_id' $query_part WHERE complaint_id = '$complaint_id'";
         $this->mysqli_lib->update($query);
 
         $this->SaveComplaintStatus($login_id,$complaint_id,$status_id,$user_id,$progress,$notes);
@@ -1077,6 +1078,7 @@ class Complaint
 
     function CloseComplaint($complaint_id,$comments)
     {
+        $comments = $this->mysqli_lib->escape($comments);
         $query = "UPDATE tbl_complaints SET status_id = '3', comments_close = '$comments', close_date = NOW() WHERE complaint_id = '$complaint_id'";
         $this->mysqli_lib->update($query);
         return $response = "success";
@@ -1316,7 +1318,7 @@ class Complaint
         $queryString = '';
 
         if (!empty($notes)) {
-            $queryString = ", comments = '$notes'";
+            $queryString = ", comments = '".$this->mysqli_lib->escape($notes)."'";
         }
 
         if($manual == "1") // When AssignedBy User Reassigned to any department
@@ -1440,7 +1442,7 @@ class Complaint
         $queryString = '';
 
         if (!empty($notes)) {
-            $queryString = ", comments = '$notes'";
+            $queryString = ", comments = '".$this->mysqli_lib->escape($notes)."'";
         }
 
         if($manual == "1") //When AssignedBy User Reassigned to any department
@@ -1573,7 +1575,7 @@ class Complaint
         $queryString = '';
 
         if (!empty($notes)) {
-            $queryString = ", comments = '$notes'";
+            $queryString = ", comments = '".$this->mysqli_lib->escape($notes)."'";
         }
 
         if($manual == "1")      //When AssignedBy User Reassigned to any department
@@ -1713,7 +1715,7 @@ class Complaint
         $queryString = '';
 
         if (!empty($notes)) {
-            $queryString = ", comments = '$notes'";
+            $queryString = ", comments = '".$this->mysqli_lib->escape($notes)."'";
         }
 
         if($manual == "1")
@@ -1817,7 +1819,7 @@ class Complaint
         $queryString = '';
 
         if (!empty($notes)) {
-            $queryString = ", comments = '$notes'";
+            $queryString = ", comments = '".$this->mysqli_lib->escape($notes)."'";
         }
 
         if($manual == "1")
@@ -1945,7 +1947,7 @@ class Complaint
         $queryString = '';
 
         if (!empty($notes)) {
-            $queryString = ", comments = '$notes'";
+            $queryString = ", comments = '".$this->mysqli_lib->escape($notes)."'";
         }
 
         if($manual == "1")
@@ -2091,7 +2093,7 @@ class Complaint
         $queryString = '';
 
         if (!empty($notes)) {
-            $queryString = ", comments = '$notes'";
+            $queryString = ", comments = '".$this->mysqli_lib->escape($notes)."'";
         }
 
         if($manual == "1")
@@ -2163,6 +2165,7 @@ class Complaint
 
     function SaveComplaintStatus($login_id,$complaint_id,$status_id,$progress,$notes,$cmode)
     {
+        $notes = $this->mysqli_lib->escape($notes);
         $query = "INSERT INTO tbl_complaint_status (login_id,complaint_id,complaint_mode,current_state,progress,comments) VALUES('$login_id','$complaint_id','$cmode','$status_id','$progress','$notes')";
         $this->mysqli_lib->insert($query);
     }
@@ -2214,6 +2217,7 @@ class Complaint
 
     function VerifiedComplaint($complaint_id,$comments)
     {
+        $comments = $this->mysqli_lib->escape($comments);
         $query = "UPDATE tbl_complaints SET status_id = '4', comments_verified = '$comments' WHERE complaint_id = '$complaint_id'";
         $this->mysqli_lib->update($query);
         return $response = "success";
@@ -2372,8 +2376,8 @@ class Complaint
     function UpdateCommentsLife($comments,$file_counter,$id)
     {
         $queryString = '';
-        if (!empty($notes)) {
-            $queryString = ", comments = '$comments'";
+        if (!empty($comments)) {
+            $queryString = ", comments = '".$this->mysqli_lib->escape($comments)."'";
         }
 
         $query = "UPDATE tbl_complaints_life SET  file_counter = '$file_counter' $queryString WHERE complaint_id = '$id'";
@@ -2385,8 +2389,8 @@ class Complaint
     function UpdateCommentsCo($comments,$file_counter,$id)
     {
         $queryString = '';
-        if (!empty($notes)) {
-            $queryString = ", comments = '$comments'";
+        if (!empty($comments)) {
+            $queryString = ", comments = '".$this->mysqli_lib->escape($comments)."'";
         }
 
         $query = "UPDATE tbl_complaints_cooperate SET  file_counter = '$file_counter' $queryString WHERE complaint_id = '$id'";
@@ -2398,8 +2402,8 @@ class Complaint
     function UpdateCommentsLegal($comments,$file_counter,$id)
     {
         $queryString = '';
-        if (!empty($notes)) {
-            $queryString = ", comments = '$comments'";
+        if (!empty($comments)) {
+            $queryString = ", comments = '".$this->mysqli_lib->escape($comments)."'";
         }
 
         $query = "UPDATE tbl_complaints_legal SET file_counter = '$file_counter' $queryString WHERE complaint_id = '$id'";
@@ -2411,8 +2415,8 @@ class Complaint
     function UpdateCommentsInternal($comments,$file_counter,$id)
     {
         $queryString = '';
-        if (!empty($notes)) {
-            $queryString = ", comments = '$comments'";
+        if (!empty($comments)) {
+            $queryString = ", comments = '".$this->mysqli_lib->escape($comments)."'";
         }
 
         $query = "UPDATE tbl_complaints_internal SET  file_counter = '$file_counter' $queryString WHERE complaint_id = '$id'";
@@ -2424,8 +2428,8 @@ class Complaint
     function UpdateCommentsBanca($comments,$file_counter,$id)
     {
         $queryString = '';
-        if (!empty($notes)) {
-            $queryString = ", comments = '$comments'";
+        if (!empty($comments)) {
+            $queryString = ", comments = '".$this->mysqli_lib->escape($comments)."'";
         }
 
         $query = "UPDATE tbl_complaints_banca SET file_counter = '$file_counter' $queryString  WHERE complaint_id = '$id'";
@@ -2437,8 +2441,8 @@ class Complaint
     function UpdateCommentsBancaBank($comments,$file_counter,$id)
     {
          $queryString = '';
-        if (!empty($notes)) {
-            $queryString = ", comments = '$comments'";
+        if (!empty($comments)) {
+            $queryString = ", comments = '".$this->mysqli_lib->escape($comments)."'";
         }
 
         $query = "UPDATE tbl_complaints_banca_bank SET file_counter = '$file_counter' $queryString WHERE complaint_id = '$id'";
@@ -2450,8 +2454,8 @@ class Complaint
     function UpdateCommentsVatality($comments,$file_counter,$id)
     {
          $queryString = '';
-        if (!empty($notes)) {
-            $queryString = ", comments = '$comments'";
+        if (!empty($comments)) {
+            $queryString = ", comments = '".$this->mysqli_lib->escape($comments)."'";
         }
 
         $query = "UPDATE tbl_complaints_vatality SET file_counter = '$file_counter'  $queryString WHERE complaint_id = '$id'";
