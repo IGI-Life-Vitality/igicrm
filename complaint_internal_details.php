@@ -38,7 +38,7 @@
             $disable_complaint_progress  = ($data[0]["progress"] == 100 ||  $data[0]['user_id'] == 0)? "disabled='true'" : "";
 
             $comments_progress   = ($data[0]['status_id'] == 3 || $data[0]['status_id'] == 6) ? $data[0]['comments'] : '';
-            $disabled_comments   = ($data[0]['status_id'] == 3 || $data[0]['status_id']== 6 ||  $data[0]['user_id'] == 0) ? "disabled='true'" : "";
+            $disabled_comments   = ($data[0]['status_id'] == 3 || $data[0]['status_id']== 6) ? "disabled='true'" : "";
 
             $email_checked       = $data[0]['is_email'] == 0 ? "checked='true'" : "";
             $sms_checked         = $data[0]['is_sms'] == 0 ? "checked='true'" : "";
@@ -414,7 +414,7 @@
         }
         else if(user_id == 0 && invalid == 0 && status != 5)
         {
-            if($('#cmp_user_namei').val() == null || $('#cmp_user_namei').val()  == "") 
+            if($('#cmp_user_namei').length > 0 && ($('#cmp_user_namei').val() == null || $('#cmp_user_namei').val()  == "")) 
             {
                 $('#cmp_user_namei').addClass('error-val');
                 $('#cmp_user_namei').parent().find('.input-error').show().css('display', 'inline-block');
@@ -435,7 +435,7 @@
 
         // if(user_type == 4)
         // {
-            if($('#txtActivityI').val() == "") 
+            if(!$('#txtActivityI').is(':disabled') && $('#txtActivityI').val() == "") 
             {
                 $('#txtActivityI').addClass('error-val');
                 $('#txtActivityI').parent().find('.input-error').show().css('display', 'inline-block');

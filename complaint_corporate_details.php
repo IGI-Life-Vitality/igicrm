@@ -836,7 +836,7 @@
         }    
         else if(user_id == 0 && invalid == 0 && status != 5)
         {
-            if($('#cmp_user_namec').val() == null || $('#cmp_user_namec').val()  == "") 
+            if($('#cmp_user_namec').length > 0 && ($('#cmp_user_namec').val() == null || $('#cmp_user_namec').val()  == "")) 
             {
                 $('#cmp_user_namec').addClass('error-val');
                 $('#cmp_user_namec').parent().find('.input-error').show().css('display', 'inline-block');
@@ -857,7 +857,7 @@
 
         // if(user_type == 4 && status != 5)
         // {
-            if($('#txtActivityC').val() == "") 
+            if(!$('#txtActivityC').is(':disabled') && $('#txtActivityC').val() == "") 
             {
                 $('#txtActivityC').addClass('error-val');
                 $('#txtActivityC').parent().find('.input-error').show().css('display', 'inline-block');

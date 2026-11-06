@@ -902,7 +902,7 @@
         }
         else if(user_id == 0 && invalid == 0 && status != 5) // For Reassignemt with menual user
         {
-            if($('#cmp_user_namel').val() == null || $('#cmp_user_namel').val()  == "") 
+            if($('#cmp_user_namel').length > 0 && ($('#cmp_user_namel').val() == null || $('#cmp_user_namel').val()  == "")) 
             {
                 $('#cmp_user_namel').addClass('error-val');
                 $('#cmp_user_namel').parent().find('.input-error').show().css('display', 'inline-block');
@@ -923,7 +923,7 @@
 
         // if(user_type == 4)
         // {
-            if($('#txtActivityL').val() == "" || $('#txtActivityL').val() == null) 
+            if(!$('#txtActivityL').is(':disabled') && ($('#txtActivityL').val() == "" || $('#txtActivityL').val() == null)) 
             {
                 $('#txtActivityL').addClass('error-val');
                 $('#txtActivityL').parent().find('.input-error').show().css('display', 'inline-block');

@@ -1331,14 +1331,15 @@ class Complaint
 
             if($is_manual == 0) // Execute when reassignment has been made with auto user assignment
             {
-                $query = "UPDATE tbl_complaints_life SET status_id = '$status_id', group_id = '$departmentName', user_id = '$new_user', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type', priority_id = '$pri', tat = '$tatt' WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
+                $query = "UPDATE tbl_complaints_life SET status_id = '$status_id', group_id = '$departmentName', user_id = '$new_user', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type', priority_id = '$pri', tat = '$tatt' $queryString WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
                 $this->mysqli_lib->update($query);
             }
             else // Execute when reassignment has been made with manual user assignment
             {
-                $query = "UPDATE tbl_complaints_life SET status_id = '$status_id', group_id = '$departmentName', user_id = '$new_user', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type' WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
+                $query = "UPDATE tbl_complaints_life SET status_id = '$status_id', group_id = '$departmentName', user_id = '$new_user', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type' $queryString WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
                 $this->mysqli_lib->update($query);
             }
+            $this->SaveComplaintStatus($login_id,$complaint_id,$status_id,'0',$notes,$cmode);
         }
         elseif($manual == "2") // When AssignedTo HoD Confirm Invaild
         {
@@ -1451,14 +1452,15 @@ class Complaint
 
             if($is_manual == 0)
             {
-                $query = "UPDATE tbl_complaints_cooperate SET status_id = '$status_id', group_id = '$departmentName', user_id = '$new_user', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type', priority_id = '$pri', tat = '$tatt' WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
+                $query = "UPDATE tbl_complaints_cooperate SET status_id = '$status_id', group_id = '$departmentName', user_id = '$new_user', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type', priority_id = '$pri', tat = '$tatt' $queryString WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
                 $this->mysqli_lib->update($query);
             }
             else
             {
-                $query = "UPDATE tbl_complaints_cooperate SET status_id = '$status_id', group_id = '$departmentName', user_id = '$new_user', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type' WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
+                $query = "UPDATE tbl_complaints_cooperate SET status_id = '$status_id', group_id = '$departmentName', user_id = '$new_user', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type' $queryString WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
                 $this->mysqli_lib->update($query);
             }
+            $this->SaveComplaintStatus($login_id,$complaint_id,$status_id,'0',$notes,$cmode);
         }
         elseif($manual == "2") //When AssignedTo HoD Confirm Invaild
         {
@@ -1588,14 +1590,15 @@ class Complaint
 
             if($is_manual == 0) // Execute when reassignment has been made with auto user assignment
             {
-                $query = "UPDATE tbl_complaints_legal SET status_id = '$status_id', group_id = '$departmentName', user_id = '$cmp_user_name', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type', priority_id = '$pri', tat = '$tatt' WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
+                $query = "UPDATE tbl_complaints_legal SET status_id = '$status_id', group_id = '$departmentName', user_id = '$cmp_user_name', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type', priority_id = '$pri', tat = '$tatt' $queryString WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
                 $this->mysqli_lib->update($query);
             }
             else // Execute when reassignment has been made with manual user assignment
             {
-                $query = "UPDATE tbl_complaints_legal SET status_id = '$status_id', group_id = '$departmentName', user_id = '$cmp_user_name', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type' WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
+                $query = "UPDATE tbl_complaints_legal SET status_id = '$status_id', group_id = '$departmentName', user_id = '$cmp_user_name', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type' $queryString WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
                 $this->mysqli_lib->update($query);
             }
+            $this->SaveComplaintStatus($login_id,$complaint_id,$status_id,'0',$notes,$cmode);
         }
         elseif($manual == "2")  //When AssignedTo HoD Confirm Invaild
         {
@@ -1724,14 +1727,15 @@ class Complaint
 
             if($is_manual == 0)
             {
-                $query = "UPDATE tbl_complaints_internal SET status_id = '$status_id', group_id = '$departmentName', user_id = '$cmp_user_name', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type', priority_id = '$pri', tat = '$tatt' WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
+                $query = "UPDATE tbl_complaints_internal SET status_id = '$status_id', group_id = '$departmentName', user_id = '$cmp_user_name', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type', priority_id = '$pri', tat = '$tatt' $queryString WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
                 $this->mysqli_lib->update($query);
             }
             else
             {
-                $query = "UPDATE tbl_complaints_internal SET status_id = '$status_id', group_id = '$departmentName', user_id = '$cmp_user_name', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type' WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
+                $query = "UPDATE tbl_complaints_internal SET status_id = '$status_id', group_id = '$departmentName', user_id = '$cmp_user_name', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type' $queryString WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
                 $this->mysqli_lib->update($query);
             }
+            $this->SaveComplaintStatus($login_id,$complaint_id,$status_id,'0',$notes,$cmode);
         }
         elseif($manual == "2")
         {
@@ -1828,14 +1832,15 @@ class Complaint
 
             if($is_manual == 0)
             {
-                $query = "UPDATE tbl_complaints_banca SET status_id = '$status_id', group_id = '$departmentName', user_id = '$cmp_user_name', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type', priority_id = '$pri' , tat = '$tatt' WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
+                $query = "UPDATE tbl_complaints_banca SET status_id = '$status_id', group_id = '$departmentName', user_id = '$cmp_user_name', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type', priority_id = '$pri' , tat = '$tatt' $queryString WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
                 $this->mysqli_lib->update($query);
             }
             else
             {
-                $query = "UPDATE tbl_complaints_banca SET status_id = '$status_id', group_id = '$departmentName', user_id = '$cmp_user_name', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type' WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
+                $query = "UPDATE tbl_complaints_banca SET status_id = '$status_id', group_id = '$departmentName', user_id = '$cmp_user_name', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type' $queryString WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
                 $this->mysqli_lib->update($query);
             }
+            $this->SaveComplaintStatus($login_id,$complaint_id,$status_id,'0',$notes,$cmode);
         }
         elseif($manual == "2")
         {
@@ -1956,14 +1961,15 @@ class Complaint
 
             if($is_manual == 0)
             {
-                $query = "UPDATE tbl_complaints_banca_bank SET status_id = '$status_id', group_id = '$departmentName', user_id = '$cmp_user_name', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type', priority_id = '$pri' , tat = '$tatt' WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
+                $query = "UPDATE tbl_complaints_banca_bank SET status_id = '$status_id', group_id = '$departmentName', user_id = '$cmp_user_name', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type', priority_id = '$pri' , tat = '$tatt' $queryString WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
                 $this->mysqli_lib->update($query);
             }
             else
             {  
-                $query = "UPDATE tbl_complaints_banca_bank SET status_id = '$status_id', group_id = '$departmentName', user_id = '$cmp_user_name', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type' WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
+                $query = "UPDATE tbl_complaints_banca_bank SET status_id = '$status_id', group_id = '$departmentName', user_id = '$cmp_user_name', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type' $queryString WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
                 $this->mysqli_lib->update($query);
             }
+            $this->SaveComplaintStatus($login_id,$complaint_id,$status_id,'0',$notes,$cmode);
         }
         elseif($manual == "2")
         {
@@ -2102,14 +2108,15 @@ class Complaint
 
             if($is_manual == 0)
             {
-                $query = "UPDATE tbl_complaints_vatality SET status_id = '$status_id', group_id = '$departmentName', user_id = '$cmp_user_name', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type' priority_id = '$pri' , tat = '$tatt' WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
+                $query = "UPDATE tbl_complaints_vatality SET status_id = '$status_id', group_id = '$departmentName', user_id = '$cmp_user_name', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type', priority_id = '$pri' , tat = '$tatt' $queryString WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
                 $this->mysqli_lib->update($query);
             }
             else
             { 
-                $query = "UPDATE tbl_complaints_vatality SET status_id = '$status_id', group_id = '$departmentName', user_id = '$cmp_user_name', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type' WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
+                $query = "UPDATE tbl_complaints_vatality SET status_id = '$status_id', group_id = '$departmentName', user_id = '$cmp_user_name', complaint_depart = '$departmentName', complaint_type_id = '$cmp_type' $queryString WHERE complaint_id = '$complaint_id' AND type = '$cmode'";
                 $this->mysqli_lib->update($query);
             }
+            $this->SaveComplaintStatus($login_id,$complaint_id,$status_id,'0',$notes,$cmode);
         }
         elseif($manual == "2")
         {
